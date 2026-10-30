@@ -2,19 +2,14 @@
   "version": 1,
   "active_task": {
     "task_id": "planner-live-embed",
-    "last_phase": "phase 3",
-    "active_phase": 3,
-    "status": "in_progress",
-    "updated_at": 1793392708.2754726,
+    "last_phase": "phase 4",
+    "active_phase": 5,
+    "status": "completed",
+    "updated_at": 1793396532.4110005,
     "owner": "kilo:1",
     "started_by": "kilo:1",
     "continuations": [],
-    "impact_assessment": {
-      "why": "The dossier only embeds builds whose index.html references no third-party URLs.",
-      "benefits": "Meridian can run on the AegeanWorks Live page next to the other browser apps.",
-      "risks": "contract: live build validator; dependency: none; concurrency: the dossier repo has another task in flight; state: relative LICENSE path must resolve inside live/meridian/<commit>/.",
-      "mitigation": "Runtime whitelist includes LICENSE so the relative link resolves; validator re-run before the catalog is written."
-    }
+    "completed_at": 1793396532.6631293
   },
   "checkpoints": [
     {
@@ -206,6 +201,48 @@
         "risks": "contract: live build validator; dependency: none; concurrency: the dossier repo has another task in flight; state: relative LICENSE path must resolve inside live/meridian/<commit>/.",
         "mitigation": "Runtime whitelist includes LICENSE so the relative link resolves; validator re-run before the catalog is written."
       }
+    },
+    {
+      "task_id": "planner-live-embed",
+      "phase": "phase 3",
+      "phase_num": 3,
+      "description": "[2/2] Dossier side landed in AegeanWorks commit ae42b4f: sync_live_apps gains an AL-1.1 browser entry for Meridian, docs/live.json regenerated with the build pinned to 615e040, and the atlas gains its card, license family, snapshot row, README entry and dossier media (logo, social preview, commit-stamped screenshot). Verified: 94 profile tests, four Node parity suites, media and live tool checks, and a headless pass against the deployed site (Meridian embedded with 48 cells and Reset, 36 atlas cards, no console errors).",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793396491.545018,
+      "timestamp_str": "2026-10-31 00:41:31",
+      "agent": "kilo:1",
+      "handoff": {
+        "state": "live catalog and atlas entry shipped in production",
+        "next": "none",
+        "evidence": "aegeanworks.github.io/AegeanWorks/play.html shows 5 apps with Meridian embedded"
+      }
+    },
+    {
+      "task_id": "planner-live-embed",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/2] Phase 4 verified: 4/4 gates pass, 47/47 tests, working tree clean apart from the ledger, and the deployed pages confirmed in a real browser. checklists: passed.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793396532.4110005,
+      "timestamp_str": "2026-10-31 00:42:12",
+      "agent": "kilo:1",
+      "handoff": {
+        "state": "all gates green",
+        "next": "none",
+        "evidence": "aikit.py check meridian 4/4"
+      }
+    },
+    {
+      "task_id": "planner-live-embed",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'planner-live-embed' completed successfully.",
+      "status": "completed",
+      "timestamp": 1793396532.6631305,
+      "timestamp_str": "2026-10-31 00:42:12",
+      "agent": "kilo:1"
     }
   ]
 }
