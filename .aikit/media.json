@@ -2,19 +2,19 @@
   "schema": 1,
   "name": "meridian",
   "repo": "Meridian",
-  "has_ui": false,
-  "ui_kind": "library",
+  "has_ui": true,
+  "ui_kind": "web",
   "palette": [
-    "#120712",
-    "#301223",
-    "#f566f0",
-    "#f5a08e"
+    "#05070d",
+    "#0c1322",
+    "#38d9c3",
+    "#7ff0dd"
   ],
   "motif": "grid",
-  "layout": "terminal",
+  "layout": "dashboard",
   "assets": {
     "logo": {
-      "path": "assets/logo.svg",
+      "path": "assets/logo.png",
       "status": "approved",
       "commit": "",
       "generated_at": "2026-10-30T18:42:03",
@@ -28,7 +28,7 @@
       }
     },
     "social_preview": {
-      "path": "assets/social-preview.svg",
+      "path": "assets/social-preview.png",
       "status": "approved",
       "commit": "",
       "generated_at": "2026-10-30T18:42:03",
@@ -43,18 +43,6 @@
     }
   },
   "screenshots": [
-    {
-      "path": "assets/screenshots/2026-10-30-home.png",
-      "alt": "Meridian interface at 2026-10-30",
-      "caption": "Meridian interface captured from index.html",
-      "commit": "62293a16eca6e7bda21b2f0b2064f623952c5603",
-      "taken_at": "2026-10-30",
-      "viewport": "1440x900",
-      "width": 1440,
-      "height": 900,
-      "status": "pending_review",
-      "review": null
-    },
     {
       "path": "assets/screenshots/2026-10-30-home.png",
       "alt": "Meridian interface at 2026-10-30",
