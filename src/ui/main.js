@@ -37,6 +37,7 @@ const ui = {
   addStart: byId("participant-start"),
   addEnd: byId("participant-end"),
   addButton: byId("participant-add"),
+  planReset: byId("plan-reset"),
   participants: byId("participants"),
   grid: byId("grid"),
   duration: byId("duration"),
@@ -230,6 +231,12 @@ function addParticipant(entry) {
   return true;
 }
 
+function resetPlan() {
+  state.slot = null;
+  applyPlan(defaultPlan(Date.now(), state.plan.referenceZone));
+  say("Plan reset to the example for today.");
+}
+
 function setDate(dateISO) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(dateISO))) return false;
   applyPlan({ ...state.plan, date: dateISO });
@@ -308,6 +315,8 @@ function bindEvents() {
       if (event.key === "Enter") ui.addButton.click();
     });
   }
+
+  ui.planReset.addEventListener("click", resetPlan);
 
   ui.duration.addEventListener("change", () => {
     state.duration = Number(ui.duration.value) || 1;
@@ -411,6 +420,7 @@ globalThis.meridian = {
   setReferenceZone,
   addParticipant,
   removeParticipant,
+  resetPlan,
   bestSlot: () => {
     const best = bestSlotFor(dayPlan, state.duration);
     if (best) setSlot(best);

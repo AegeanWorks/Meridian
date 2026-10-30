@@ -321,8 +321,11 @@ async function main() {
     }
 
     await connection.evaluate("document.getElementById('download-ics').click()");
-    await wait(900);
-    const saved = readdirSync(downloads).find((name) => name.endsWith(".ics"));
+    let saved = null;
+    for (let attempt = 0; attempt < 25 && !saved; attempt += 1) {
+      await wait(200);
+      saved = readdirSync(downloads).find((name) => name.endsWith(".ics")) ?? null;
+    }
     if (!saved) throw new Error("the calendar file was not downloaded");
     const calendar = readFileSync(join(downloads, saved), "utf8");
     if (!calendar.startsWith("BEGIN:VCALENDAR") || !calendar.includes("DTSTART:") || !calendar.includes("DTEND:")) {
@@ -387,12 +390,35 @@ async function main() {
       throw new Error(`a pasted share hash was not loaded: ${JSON.stringify(randomPlan)}`);
     }
 
+    await connection.evaluate("document.getElementById('plan-reset').click()");
+    await wait(300);
+    const reset = await connection.evaluate(`(() => ({
+      participants: globalThis.meridian.plan.participants.length,
+      labels: globalThis.meridian.plan.participants.map((participant) => participant.label),
+      rows: document.querySelectorAll('.participant-row').length,
+      cells: document.querySelectorAll('button.cell').length,
+      date: globalThis.meridian.plan.date,
+      input: document.getElementById('date-input').value,
+      slot: globalThis.meridian.slot,
+      summaryHidden: document.getElementById('summary').hidden,
+      hash: location.hash,
+    }))()`);
+    if (reset.participants !== 2 || reset.rows !== 2 || reset.cells !== 48) {
+      throw new Error(`Reset did not restore the example plan: ${JSON.stringify(reset)}`);
+    }
+    if (reset.labels[0] !== "You" || reset.date !== reset.input) {
+      throw new Error(`Reset left stale plan details: ${JSON.stringify(reset)}`);
+    }
+    if (reset.slot !== null || !reset.summaryHidden || !reset.hash.includes("#p=")) {
+      throw new Error(`Reset did not clear the selected slot: ${JSON.stringify(reset)}`);
+    }
+
     if (connection.errors.length) {
       throw new Error(`the page reported an error: ${connection.errors[0]}`);
     }
 
     console.log(
-      "[OK] Meridian dogfood: default plan, add/remove people, drag selection across rows, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper and pasted links.",
+      "[OK] Meridian dogfood: default plan, add/remove people, drag selection across rows, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links and Reset.",
     );
     return 0;
   } catch (error) {
