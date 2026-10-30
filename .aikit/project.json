@@ -7,7 +7,18 @@
     "aikit-integrated",
     "source-available",
     "aegean-license",
-    "commercial-license"
+    "commercial-license",
+    "aegeanworks",
+    "javascript",
+    "vanilla-javascript",
+    "web-app",
+    "static-site",
+    "github-pages",
+    "local-first",
+    "offline-first",
+    "timezone",
+    "scheduling",
+    "productivity"
   ],
   "gates": {},
   "ui_required": true,
@@ -19,5 +30,7 @@
     "index.html"
   ],
   "ui_checked_at": "2026-10-30",
-  "ui_source": "detected"
+  "ui_source": "detected",
+  "topics_source": "ai",
+  "topics_reviewed_at": "2026-10-30"
 }
