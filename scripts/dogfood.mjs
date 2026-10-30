@@ -235,7 +235,7 @@ async function main() {
         heading: document.getElementById('date-heading').textContent,
       };
     })()`);
-    if (!initial.ready || initial.participants !== 1 || initial.rows !== 1 || initial.cells !== 24) {
+    if (!initial.ready || initial.participants !== 2 || initial.rows !== 2 || initial.cells !== 48) {
       throw new Error(`the default plan did not mount: ${JSON.stringify(initial)}`);
     }
     if (!initial.nowLine || !initial.heading.trim()) {
@@ -252,10 +252,10 @@ async function main() {
       workWindows: globalThis.meridian.dayPlan.windows.work.length,
       awakeWindows: globalThis.meridian.dayPlan.windows.awake.length,
     }))()`);
-    if (added.rows !== 3 || added.cells !== 72) {
+    if (added.rows !== 4 || added.cells !== 96) {
       throw new Error(`adding people did not grow the grid: ${JSON.stringify(added)}`);
     }
-    if (added.participants.join(",") !== "You,Sam,Mei") {
+    if (added.participants.join(",") !== "You,New York,Sam,Mei") {
       throw new Error(`participant order is wrong: ${JSON.stringify(added.participants)}`);
     }
     if (!added.hash.includes("#p=")) throw new Error("the plan was not written to the URL hash");
@@ -280,10 +280,10 @@ async function main() {
     if (!dragged.slot || dragged.slot.start !== 10 || dragged.slot.hours !== 3) {
       throw new Error(`dragging did not select a three-hour slot: ${JSON.stringify(dragged.slot)}`);
     }
-    if (dragged.selected !== 3 * 3) {
+    if (dragged.selected !== 3 * 4) {
       throw new Error(`the selection was not painted on every row: ${dragged.selected}`);
     }
-    if (dragged.summaryHidden || dragged.lines !== 3 || !dragged.badge) {
+    if (dragged.summaryHidden || dragged.lines !== 4 || !dragged.badge) {
       throw new Error(`the summary card is incomplete: ${JSON.stringify(dragged)}`);
     }
     if (!dragged.icsEnabled || !dragged.title.includes("·")) {
@@ -309,7 +309,7 @@ async function main() {
       const data = globalThis.meridian.slotData;
       return { slot, level: data?.quality?.level ?? null, lines: data?.rows?.length ?? 0 };
     })()`);
-    if (!best.slot || best.lines !== 3 || !["work", "awake", "mixed"].includes(best.level)) {
+    if (!best.slot || best.lines !== 4 || !["work", "awake", "mixed"].includes(best.level)) {
       throw new Error(`best slot did not produce a scored slot: ${JSON.stringify(best)}`);
     }
 
@@ -340,7 +340,7 @@ async function main() {
       rows: document.querySelectorAll('.participant-row').length,
       labels: globalThis.meridian.plan.participants.map((participant) => participant.label),
     }))()`);
-    if (removed.participants !== 2 || removed.rows !== 2) {
+    if (removed.participants !== 3 || removed.rows !== 3) {
       throw new Error(`removing a person did not shrink the grid: ${JSON.stringify(removed)}`);
     }
 
@@ -355,7 +355,7 @@ async function main() {
       cells: document.querySelectorAll('button.cell').length,
       hash: location.hash,
     }))()`);
-    if (rezoned.referenceZone !== "Pacific/Auckland" || rezoned.cells !== 48 || !rezoned.hash.includes("Auckland")) {
+    if (rezoned.referenceZone !== "Pacific/Auckland" || rezoned.cells !== 72 || !rezoned.hash.includes("Auckland")) {
       throw new Error(`the reference zone did not apply: ${JSON.stringify(rezoned)}`);
     }
 

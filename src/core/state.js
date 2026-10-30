@@ -107,12 +107,24 @@ export function decodePlan(hash) {
   return normalizePlan({ date: payload?.d, referenceZone: payload?.r, participants: entries });
 }
 
+export const DEFAULT_GUEST_ZONES = Object.freeze([
+  "America/New_York",
+  "Europe/London",
+  "Asia/Tokyo",
+  "Australia/Sydney",
+  "America/Los_Angeles",
+  "Asia/Singapore",
+]);
+
 export function defaultPlan(now = Date.now(), zone = currentZone()) {
   const referenceZone = isValidTimeZone(zone) ? zone : "UTC";
+  const guestZone = DEFAULT_GUEST_ZONES.find((candidate) => candidate !== referenceZone);
+  const participants = [{ label: "You", zone: referenceZone }];
+  if (guestZone) participants.push({ label: zoneLabel(guestZone), zone: guestZone });
   return normalizePlan({
     date: localDateISO(now, referenceZone),
     referenceZone,
-    participants: [{ label: "You", zone: referenceZone }],
+    participants,
   });
 }
 

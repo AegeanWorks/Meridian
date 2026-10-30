@@ -21,14 +21,21 @@ const valid = () => ({
 
 const at = (iso) => new Date(iso).getTime();
 
-test("the default plan is one person in the viewer's zone, today", () => {
+test("the default plan is the viewer's zone plus one guest in another region", () => {
   const plan = defaultPlan(at("2026-06-15T12:00:00Z"), "Europe/Istanbul");
   assert.equal(plan.version, STATE_VERSION);
   assert.equal(plan.date, "2026-06-15");
   assert.equal(plan.referenceZone, "Europe/Istanbul");
-  assert.deepEqual(plan.participants, [
-    { id: "p1", label: "You", zone: "Europe/Istanbul", workStart: 9, workEnd: 17 },
-  ]);
+  assert.equal(plan.participants.length, 2);
+  assert.deepEqual(plan.participants[0], {
+    id: "p1",
+    label: "You",
+    zone: "Europe/Istanbul",
+    workStart: 9,
+    workEnd: 17,
+  });
+  assert.notEqual(plan.participants[1].zone, "Europe/Istanbul");
+  assert.equal(plan.participants[1].label, "New York");
 });
 
 test("the default plan falls back to UTC for an unknown zone", () => {

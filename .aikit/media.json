@@ -28,5 +28,30 @@
       "review": null
     }
   },
-  "screenshots": []
+  "screenshots": [
+    {
+      "path": "assets/screenshots/2026-10-30-home.png",
+      "alt": "Meridian interface at 2026-10-30",
+      "caption": "Meridian interface captured from index.html",
+      "commit": "62293a16eca6e7bda21b2f0b2064f623952c5603",
+      "taken_at": "2026-10-30",
+      "viewport": "1440x900",
+      "width": 1440,
+      "height": 900,
+      "status": "pending_review",
+      "review": null
+    },
+    {
+      "path": "assets/screenshots/2026-10-30-home.png",
+      "alt": "Meridian interface at 2026-10-30",
+      "caption": "Meridian interface captured from index.html",
+      "commit": "99b468fef07295b25783840942222e363f8a8787",
+      "taken_at": "2026-10-30",
+      "viewport": "1440x900",
+      "width": 1440,
+      "height": 900,
+      "status": "pending_review",
+      "review": null
+    }
+  ]
 }
