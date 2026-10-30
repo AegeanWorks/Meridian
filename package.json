@@ -1,0 +1,16 @@
+{
+  "name": "meridian",
+  "version": "0.1.0",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "description": "A zero-dependency time zone meeting planner that runs entirely in the browser: add people and cities, compare every local hour side by side, find the overlap that works for everyone, then share it as a link or a calendar file.",
+  "scripts": {
+    "start": "node scripts/serve.mjs --open",
+    "test": "node --test tests",
+    "dogfood": "node scripts/dogfood.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

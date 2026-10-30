@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "name": "meridian",
+  "repo": "Meridian",
+  "has_ui": false,
+  "ui_kind": "library",
+  "palette": [
+    "#120712",
+    "#301223",
+    "#f566f0",
+    "#f5a08e"
+  ],
+  "motif": "grid",
+  "layout": "terminal",
+  "assets": {
+    "logo": {
+      "path": "assets/logo.svg",
+      "status": "pending_review",
+      "commit": "",
+      "generated_at": "2026-10-30T18:42:03",
+      "review": null
+    },
+    "social_preview": {
+      "path": "assets/social-preview.svg",
+      "status": "pending_review",
+      "commit": "",
+      "generated_at": "2026-10-30T18:42:03",
+      "review": null
+    }
+  },
+  "screenshots": []
+}

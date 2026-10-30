@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">Meridian social preview</title>
+  <desc id="desc">A zero-dependency time zone meeting planner that runs entirely in the browser: add people and cities, compare every local hour side by side, find the overlap that works for everyone, then share it as a link or a calendar file.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#07131f"/>
+      <stop offset="0.55" stop-color="#05070d"/>
+      <stop offset="1" stop-color="#04060b"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0.16" cy="0.08" r="0.8">
+      <stop offset="0" stop-color="#38d9c3" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#38d9c3" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.92" cy="0.02" r="0.7">
+      <stop offset="0" stop-color="#7aa2ff" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#7aa2ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7ff0dd"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect width="1280" height="640" fill="url(#glowA)"/>
+  <rect width="1280" height="640" fill="url(#glowB)"/>
+
+  <g transform="translate(78 96)">
+    <g transform="translate(30 24) scale(0.42)">
+      <circle r="70" fill="none" stroke="url(#ink)" stroke-width="8"/>
+      <ellipse rx="30" ry="70" fill="none" stroke="#38d9c3" stroke-width="4" stroke-opacity="0.5"/>
+      <ellipse rx="52" ry="70" fill="none" stroke="#38d9c3" stroke-width="3" stroke-opacity="0.28"/>
+      <ellipse rx="70" ry="30" fill="none" stroke="#38d9c3" stroke-width="4" stroke-opacity="0.4"/>
+      <path d="M-70 0H70" stroke="url(#ink)" stroke-width="6"/>
+      <circle r="11" fill="#7ff0dd"/>
+    </g>
+    <text x="92" y="14" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="0.5" fill="#e9eef8">Meridian</text>
+    <text x="92" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#8c99b0">time zone meeting planner</text>
+  </g>
+
+  <text x="78" y="232" font-family="Segoe UI, Arial, sans-serif" font-size="66" font-weight="700" fill="#e9eef8">Find the hour that</text>
+  <text x="78" y="308" font-family="Segoe UI, Arial, sans-serif" font-size="66" font-weight="700" fill="url(#ink)">works for everyone.</text>
+  <text x="80" y="368" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#a9b6c9">Every person's local hour on one timeline. Zero dependencies,</text>
+  <text x="80" y="400" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#a9b6c9">no accounts, no uploads — share a link or a calendar file.</text>
+
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#c9d4e4">
+    <rect x="80" y="470" width="150" height="40" rx="20" fill="#0c1a28" stroke="#2dd4bf" stroke-opacity="0.45"/>
+    <text x="155" y="495" text-anchor="middle">offline</text>
+    <rect x="246" y="470" width="200" height="40" rx="20" fill="#0c1a28" stroke="#94a3b8" stroke-opacity="0.3"/>
+    <text x="346" y="495" text-anchor="middle">zero-dependency</text>
+    <rect x="462" y="470" width="176" height="40" rx="20" fill="#0c1a28" stroke="#94a3b8" stroke-opacity="0.3"/>
+    <text x="550" y="495" text-anchor="middle">.ics export</text>
+  </g>
+
+  <text x="80" y="590" font-family="Segoe UI, Arial, sans-serif" font-size="18" letter-spacing="6" fill="#e9eef8" fill-opacity="0.42">AEGEANWORKS</text>
+  <text x="1204" y="590" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#38d9c3" fill-opacity="0.85">github.com/AegeanWorks/Meridian</text>
+
+  <g transform="translate(790 118)">
+    <rect width="412" height="404" rx="20" fill="#0a101c" stroke="#26334d"/>
+    <text x="24" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="600" fill="#e9eef8">Fri, 30 Oct 2026</text>
+    <text x="388" y="40" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#38d9c3">14:00–16:00</text>
+    <g font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#5d6a82">
+      <text x="40" y="70">00</text><text x="80" y="70">02</text><text x="120" y="70">04</text><text x="160" y="70">06</text><text x="200" y="70">08</text><text x="240" y="70">10</text><text x="280" y="70">12</text><text x="320" y="70">14</text><text x="360" y="70">16</text>
+    </g>
+    <g>
+      <rect x="40" y="84" width="340" height="46" rx="8" fill="#0d1322"/>
+      <rect x="40" y="140" width="340" height="46" rx="8" fill="#0d1322"/>
+      <rect x="40" y="196" width="340" height="46" rx="8" fill="#0d1322"/>
+      <rect x="40" y="252" width="340" height="46" rx="8" fill="#0d1322"/>
+      <g fill="#0c352d">
+        <rect x="180" y="84" width="60" height="46"/><rect x="240" y="84" width="60" height="46"/>
+        <rect x="160" y="140" width="60" height="46"/><rect x="220" y="140" width="60" height="46"/>
+        <rect x="120" y="196" width="60" height="46"/><rect x="180" y="196" width="60" height="46"/>
+        <rect x="200" y="252" width="60" height="46"/><rect x="260" y="252" width="60" height="46"/>
+      </g>
+      <g fill="#33240f">
+        <rect x="300" y="84" width="80" height="46"/><rect x="280" y="140" width="100" height="46"/>
+        <rect x="240" y="196" width="60" height="46"/><rect x="320" y="252" width="60" height="46"/>
+      </g>
+      <g fill="#1d1b3f">
+        <rect x="40" y="84" width="140" height="46"/><rect x="40" y="140" width="120" height="46"/>
+        <rect x="40" y="196" width="80" height="46"/><rect x="40" y="252" width="160" height="46"/>
+      </g>
+      <rect x="240" y="84" width="60" height="46" fill="none" stroke="#38d9c3" stroke-width="2.5"/>
+      <rect x="240" y="140" width="60" height="46" fill="none" stroke="#38d9c3" stroke-width="2.5"/>
+      <rect x="240" y="196" width="60" height="46" fill="none" stroke="#38d9c3" stroke-width="2.5"/>
+      <rect x="240" y="252" width="60" height="46" fill="none" stroke="#38d9c3" stroke-width="2.5"/>
+    </g>
+    <g font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#a9b6c9">
+      <circle cx="52" cy="107" r="4" fill="#38d9c3"/><text x="64" y="111">You · Istanbul</text>
+      <circle cx="52" cy="163" r="4" fill="#7aa2ff"/><text x="64" y="167">Ada · Istanbul</text>
+      <circle cx="52" cy="219" r="4" fill="#ffb454"/><text x="64" y="223">Sam · New York</text>
+      <circle cx="52" cy="275" r="4" fill="#a7e05a"/><text x="64" y="279">Mei · Tokyo</text>
+    </g>
+    <rect x="24" y="322" width="364" height="58" rx="12" fill="#0f1829" stroke="#26334d"/>
+    <text x="40" y="345" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#38d9c3">ALL AWAKE</text>
+    <text x="40" y="366" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#8c99b0">Sam 07:00 · Mei 20:00 · You 14:00</text>
+  </g>
+</svg>
