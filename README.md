@@ -8,6 +8,8 @@
 
 A zero-dependency time zone meeting planner that runs entirely in the browser: add people and cities, compare every local hour side by side, find the overlap that works for everyone, then share it as a link or a calendar file.
 
+**Live:** <https://aegeanworks.github.io/Meridian/>
+
 Meridian is a static site. There is no build step, no server, no account and no upload: the page reads the browser's own IANA time zone database through `Intl`, keeps the whole plan in the URL hash, and works offline once loaded.
 
 ## ⚡ 30-Second Cold-Start Quick Reference
@@ -23,7 +25,7 @@ Meridian is a static site. There is no build step, no server, no account and no 
   npm test           # node --test tests
   npm run dogfood    # headless Edge/Chrome pass over the real UI
   ```
-- **Deploy it**: the repository root is the site. Publish with `python aikit.py publish meridian` from the AIKit folder, then enable GitHub Pages for the repository root. The page is fully static and needs no configuration.
+- **Deploy it**: the repository root is the site, already served at <https://aegeanworks.github.io/Meridian/> through GitHub Pages (`master`, `/`). A fork only needs Pages pointed at its root; there is nothing to build.
 
 ### 🛠️ AIKit Commands (run from the AIKit folder)
 | Role | Command |
