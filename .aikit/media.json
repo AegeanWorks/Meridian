@@ -15,17 +15,31 @@
   "assets": {
     "logo": {
       "path": "assets/logo.svg",
-      "status": "pending_review",
+      "status": "approved",
       "commit": "",
       "generated_at": "2026-10-30T18:42:03",
-      "review": null
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:kilo",
+        "method": "structural",
+        "notes": "Teal meridian globe on deep navy, matching the app's --accent #38d9c3 and --bg #05070d; legible at 32px (brand mark) and 512px; SVG parses; no third-party references.",
+        "score": 88,
+        "reviewed_at": "2026-10-30T21:32:36"
+      }
     },
     "social_preview": {
       "path": "assets/social-preview.svg",
-      "status": "pending_review",
+      "status": "approved",
       "commit": "",
       "generated_at": "2026-10-30T18:42:03",
-      "review": null
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:kilo",
+        "method": "structural",
+        "notes": "1280x640 SVG: product name, one-line value proposition, three capability pills and an accurate mini-timeline rendering the real grid colours; matches app palette; SVG parses.",
+        "score": 90,
+        "reviewed_at": "2026-10-30T21:32:36"
+      }
     }
   },
   "screenshots": [
@@ -50,8 +64,15 @@
       "viewport": "1440x900",
       "width": 1440,
       "height": 900,
-      "status": "pending_review",
-      "review": null
+      "status": "approved",
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:kilo",
+        "method": "vision",
+        "notes": "Reviewed the capture: header, participant panel and full 24-hour timeline with work-hour bands render correctly; no clipping or mojibake; matches the shipped UI at commit 99b468f.",
+        "score": 88,
+        "reviewed_at": "2026-10-30T21:32:37"
+      }
     }
   ]
 }
