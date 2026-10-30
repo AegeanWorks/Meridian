@@ -447,7 +447,8 @@ button:focus-visible {
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
-  width: max(100%, 1170px);
+  width: 100%;
+  min-width: 900px;
 }
 
 .corner,
@@ -455,8 +456,8 @@ button:focus-visible {
   position: sticky;
   left: 0;
   z-index: 3;
-  width: 208px;
-  min-width: 208px;
+  width: 190px;
+  min-width: 190px;
   background: var(--bg-panel);
   border-right: 1px solid var(--line-strong);
   text-align: left;
