@@ -2,19 +2,13 @@
   "version": 1,
   "active_task": {
     "task_id": "planner-polish",
-    "last_phase": "phase 3",
-    "active_phase": 3,
+    "last_phase": "phase 4",
+    "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1793390177.491968,
+    "updated_at": 1793390343.4064455,
     "owner": "kilo:1",
     "started_by": "kilo:1",
-    "continuations": [],
-    "impact_assessment": {
-      "why": "The UI told users to press Reset, but no such control existed.",
-      "benefits": "Removes a dead-end error path and gives a one-click way back to the demo state.",
-      "risks": "contract: none; dependency: none; concurrency: none; state: reset must not change the reference zone or leave a stale slot.",
-      "mitigation": "Reset reuses defaultPlan in the current zone and nulls the slot; dogfood asserts participants, rows, date sync, cleared slot and updated hash."
-    }
+    "continuations": []
   },
   "checkpoints": [
     {
@@ -168,6 +162,17 @@
         "risks": "contract: none; dependency: none; concurrency: none; state: reset must not change the reference zone or leave a stale slot.",
         "mitigation": "Reset reuses defaultPlan in the current zone and nulls the slot; dogfood asserts participants, rows, date sync, cleared slot and updated hash."
       }
+    },
+    {
+      "task_id": "planner-polish",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[1/1] Screenshot refreshed at d8bf86e and approved; media audit clean. checklists: passed. Gates 4/4, tests 47/47, dogfood [OK] x3.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793390343.4064455,
+      "timestamp_str": "2026-10-30 22:59:03",
+      "agent": "kilo:1"
     }
   ]
 }

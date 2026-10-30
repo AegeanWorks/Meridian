@@ -61,6 +61,25 @@
         "score": 88,
         "reviewed_at": "2026-10-30T21:32:37"
       }
+    },
+    {
+      "path": "assets/screenshots/2026-10-30-home.png",
+      "alt": "Meridian interface at 2026-10-30",
+      "caption": "Meridian interface captured from index.html",
+      "commit": "d8bf86ee8fa047de3027d3a26987b6b728db5d70",
+      "taken_at": "2026-10-30",
+      "viewport": "1440x900",
+      "width": 1440,
+      "height": 900,
+      "status": "approved",
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:kilo",
+        "method": "vision",
+        "notes": "Captured at d8bf86e: Reset button sits in the People header, two-zone default plan, full 24-hour grid without clipping, live clocks and the now marker at 22:56; no console or layout faults.",
+        "score": 90,
+        "reviewed_at": "2026-10-30T22:58:08"
+      }
     }
   ]
 }
