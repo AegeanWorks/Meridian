@@ -46,26 +46,7 @@
     {
       "path": "assets/screenshots/2026-10-30-home.png",
       "alt": "Meridian interface at 2026-10-30",
-      "caption": "Meridian interface captured from index.html",
-      "commit": "99b468fef07295b25783840942222e363f8a8787",
-      "taken_at": "2026-10-30",
-      "viewport": "1440x900",
-      "width": 1440,
-      "height": 900,
-      "status": "approved",
-      "review": {
-        "status": "approved",
-        "reviewer": "agent:kilo",
-        "method": "vision",
-        "notes": "Reviewed the capture: header, participant panel and full 24-hour timeline with work-hour bands render correctly; no clipping or mojibake; matches the shipped UI at commit 99b468f.",
-        "score": 88,
-        "reviewed_at": "2026-10-30T21:32:37"
-      }
-    },
-    {
-      "path": "assets/screenshots/2026-10-30-home.png",
-      "alt": "Meridian interface at 2026-10-30",
-      "caption": "Meridian interface captured from index.html",
+      "caption": "Superseded two-zone plan at commit d8bf86e; replaced by the 2026-11-03 captures. Kept as history. (Merged 2026-11-03: the file carried two entries.)",
       "commit": "d8bf86ee8fa047de3027d3a26987b6b728db5d70",
       "taken_at": "2026-10-30",
       "viewport": "1440x900",
@@ -79,6 +60,44 @@
         "notes": "Captured at d8bf86e: Reset button sits in the People header, two-zone default plan, full 24-hour grid without clipping, live clocks and the now marker at 22:56; no console or layout faults.",
         "score": 90,
         "reviewed_at": "2026-10-30T22:58:08"
+      }
+    },
+    {
+      "path": "assets/screenshots/2026-11-03-home.png",
+      "alt": "Meridian planner at 2026-11-03",
+      "caption": "Two-zone plan from npm start (http://127.0.0.1:4179): People panel, full 24-hour Istanbul/New York grid, now marker, Best slot, share controls.",
+      "commit": "981454d94acc1e3e3665acc1fe4f1f836f2bc9dd",
+      "taken_at": "2026-11-03",
+      "viewport": "1440x900",
+      "width": 1440,
+      "height": 900,
+      "status": "approved",
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:kilo",
+        "method": "vision",
+        "notes": "Real headless-Edge capture of the default plan: live clocks, work-hour bands, day-offset cells, length picker and footer all legible; embeddable-build drift did not disturb the grid.",
+        "score": 92,
+        "reviewed_at": "2026-11-03"
+      }
+    },
+    {
+      "path": "assets/screenshots/2026-11-03-mobile.png",
+      "alt": "Meridian on a 390px phone at 2026-11-03",
+      "caption": "Same build at 390x844: header wraps, People panel stacks full width; the calendar button clips at the edge.",
+      "commit": "981454d94acc1e3e3665acc1fe4f1f836f2bc9dd",
+      "taken_at": "2026-11-03",
+      "viewport": "390x844",
+      "width": 390,
+      "height": 844,
+      "status": "approved",
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:kilo",
+        "method": "vision",
+        "notes": "Real small-viewport capture: stacking works, controls stay usable; the Add-to-calendar clip is disclosed, not hidden.",
+        "score": 88,
+        "reviewed_at": "2026-11-03"
       }
     }
   ]

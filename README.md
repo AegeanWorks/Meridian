@@ -107,7 +107,9 @@ Free for personal use under the Aegean License 1.1 (AL-1.1); see [LICENSE](LICEN
 <!-- aegean:screenshots:start -->
 ## Screenshots
 
-<a href="https://github.com/AegeanWorks/Meridian/commit/99b468f"><img src="assets/screenshots/2026-10-30-home.png" alt="Meridian interface at 2026-10-30"></a>
+<a href="https://github.com/AegeanWorks/Meridian/commit/981454d"><img src="assets/screenshots/2026-11-03-home.png" alt="Meridian planner at 2026-11-03"></a>
 
-*commit `99b468f` · 2026-10-30*
+<a href="https://github.com/AegeanWorks/Meridian/commit/981454d"><img src="assets/screenshots/2026-11-03-mobile.png" alt="Meridian on a 390px phone at 2026-11-03"></a>
+
+*commit `981454d` · 2026-11-03 · viewports 1440x900 and 390x844 · duplicate 10-30 entry merged*
 <!-- aegean:screenshots:end -->
