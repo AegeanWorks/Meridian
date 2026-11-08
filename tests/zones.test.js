@@ -1,7 +1,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { COMMON_ZONES, allTimeZones, searchZones, zoneLabel, zoneRegion } from "../src/core/zones.js";
+import {
+  COMMON_ZONES,
+  allTimeZones,
+  canonicalZone,
+  searchZones,
+  zoneLabel,
+  zoneRegion,
+} from "../src/core/zones.js";
 
 test("the zone catalog is non-empty and includes the curated list", () => {
   const zones = allTimeZones();
@@ -38,4 +45,15 @@ test("an empty query lists curated zones first, capped by the limit", () => {
   assert.ok(listed.length <= 80);
   const curated = searchZones("", allTimeZones(), 3);
   assert.deepEqual(curated, ["UTC", "Pacific/Honolulu", "America/Anchorage"]);
+});
+
+test("zone identifiers are stored in catalog form", () => {
+  assert.equal(canonicalZone("europe/istanbul"), "Europe/Istanbul");
+  assert.equal(canonicalZone("  EUROPE/ISTANBUL "), "Europe/Istanbul");
+  assert.equal(canonicalZone("Europe/Istanbul"), "Europe/Istanbul");
+  assert.equal(canonicalZone("UTC"), "UTC");
+  assert.equal(canonicalZone("Bogus/Zone"), null);
+  assert.equal(canonicalZone(""), null);
+  assert.equal(canonicalZone(null), null);
+  assert.equal(canonicalZone(42), null);
 });

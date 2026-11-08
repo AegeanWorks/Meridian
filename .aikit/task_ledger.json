@@ -1,15 +1,20 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "planner-live-embed",
-    "last_phase": "phase 4",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1793396532.4110005,
-    "owner": "kilo:1",
-    "started_by": "kilo:1",
+    "task_id": "meridian-state-machines",
+    "last_phase": "phase 2",
+    "active_phase": 2,
+    "status": "in_progress",
+    "updated_at": 1794165270.9160454,
+    "owner": "commandcode:goal",
+    "started_by": "commandcode:goal",
     "continuations": [],
-    "completed_at": 1793396532.6631293
+    "impact_assessment": {
+      "why": "Meridian encodes several lifecycles in ad-hoc flags, nullable fields and status strings; unsupported plan versions are accepted, malformed share links are silently discarded, impossible dates produce a 1970 grid, and a non-finite slot can crash the summary.",
+      "benefits": "One machine-readable contract for DX/AX, version-safe links per the project's persisted-state guideline, honest feedback for broken links, crash-free AX setters, consistent duration/zone/work-hour behavior, and no behavior regression.",
+      "risks": "contract: URL payload version, zone identifiers, public meridian API; dependency: none; concurrency: single-page timers and drag state; state: plan hash, slot, duration, participants.",
+      "mitigation": "Failing-first unit tests for every helper; dogfood assertions for UI transitions; legacy hashes without v accepted as v1; the duration sync rule is preserved and named; full npm test, dogfood, aikit check and secret scan before commit."
+    }
   },
   "checkpoints": [
     {
@@ -243,6 +248,24 @@
       "timestamp": 1793396532.6631305,
       "timestamp_str": "2026-10-31 00:42:12",
       "agent": "kilo:1"
+    },
+    {
+      "task_id": "meridian-state-machines",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/6] Inventory and verify Meridian's implicit state machines (plan version, hash read, slot, duration, participants, zone validity, work day, cell category, overlap band, slot quality, best slot, drag, toast, calendar action, server request); write docs/state_machines.md. [2/6] Write docs/state_machine_proposals.md with pass/defer verdicts. [3/6] Add failing-first core tests plus boundary helpers and the explicit machine registry (version, hash-read, slot, date step, work hour, duration, zone canonicalization). [4/6] Wire the UI: malformed-link feedback, invalid-date refusal, slot/duration normalization, work-hour/zone normalization, drag cancel. [5/6] Update README, ADR-002 and the AX accessor. [6/6] Full gates (npm test, dogfood, aikit check, secrets), commit and authorized push.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794165270.9160454,
+      "timestamp_str": "2026-11-08 22:14:30",
+      "agent": "commandcode:goal",
+      "impact_assessment": {
+        "why": "Meridian encodes several lifecycles in ad-hoc flags, nullable fields and status strings; unsupported plan versions are accepted, malformed share links are silently discarded, impossible dates produce a 1970 grid, and a non-finite slot can crash the summary.",
+        "benefits": "One machine-readable contract for DX/AX, version-safe links per the project's persisted-state guideline, honest feedback for broken links, crash-free AX setters, consistent duration/zone/work-hour behavior, and no behavior regression.",
+        "risks": "contract: URL payload version, zone identifiers, public meridian API; dependency: none; concurrency: single-page timers and drag state; state: plan hash, slot, duration, participants.",
+        "mitigation": "Failing-first unit tests for every helper; dogfood assertions for UI transitions; legacy hashes without v accepted as v1; the duration sync rule is preserved and named; full npm test, dogfood, aikit check and secret scan before commit."
+      },
+      "plan_digest": "c479876be1dafcb0fb4c59a3b774087c80abf8b6073c2b622553e3403d047960"
     }
   ]
 }

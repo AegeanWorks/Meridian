@@ -8,6 +8,7 @@ import {
   isValidTimeZone,
   localDateISO,
   parseDateISO,
+  stepDateISO,
   toDateISO,
   utcForWallClock,
   wallClockFor,
@@ -91,4 +92,17 @@ test("local dates and offset labels render predictably", () => {
 
 test("the resolved zone is a valid zone name", () => {
   assert.equal(isValidTimeZone(currentZone()), true);
+});
+
+test("date stepping crosses months, years and leap days", () => {
+  assert.equal(stepDateISO("2026-06-15", 1), "2026-06-16");
+  assert.equal(stepDateISO("2026-06-30", 1), "2026-07-01");
+  assert.equal(stepDateISO("2026-12-31", 1), "2027-01-01");
+  assert.equal(stepDateISO("2026-01-01", -1), "2025-12-31");
+  assert.equal(stepDateISO("2024-02-28", 1), "2024-02-29");
+  assert.equal(stepDateISO("2026-02-28", 1), "2026-03-01");
+  assert.equal(stepDateISO("2026-06-15", 0), "2026-06-15");
+  assert.equal(stepDateISO("2026-02-31", 1), null);
+  assert.equal(stepDateISO("", 1), null);
+  assert.equal(stepDateISO("2026-06-15", Number.NaN), null);
 });

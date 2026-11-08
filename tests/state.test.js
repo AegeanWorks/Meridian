@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  HASH_STATUS,
   MAX_PARTICIPANTS,
   STATE_VERSION,
   decodePlan,
@@ -9,7 +10,9 @@ import {
   encodePlan,
   normalizeParticipant,
   normalizePlan,
+  normalizeWorkHour,
   planEquals,
+  readShareHash,
   shareUrl,
 } from "../src/core/state.js";
 
@@ -151,4 +154,57 @@ test("share links replace any previous hash", () => {
   const plan = normalizePlan(valid());
   assert.equal(shareUrl(plan, "/meridian/#old"), `/meridian/${encodePlan(plan)}`);
   assert.equal(shareUrl(plan, "/meridian/").includes("#p="), true);
+});
+
+test("an unsupported plan version is refused", () => {
+  const link = (version) =>
+    `#p=${encodeURIComponent(
+      JSON.stringify({
+        ...(version === undefined ? {} : { v: version }),
+        d: "2026-06-15",
+        r: "UTC",
+        p: [["Ada", "Europe/Istanbul", 9, 17]],
+      }),
+    )}`;
+  assert.equal(decodePlan(link(1))?.version, STATE_VERSION);
+  assert.equal(decodePlan(link())?.version, STATE_VERSION);
+  assert.equal(decodePlan(link(2)), null);
+  assert.equal(decodePlan(link(99)), null);
+  assert.equal(decodePlan(link("2")), null);
+  assert.equal(normalizePlan({ ...valid(), version: 2 }), null);
+  assert.equal(normalizePlan({ ...valid(), version: STATE_VERSION })?.version, STATE_VERSION);
+});
+
+test("a share hash reports empty, valid and invalid outcomes", () => {
+  assert.deepEqual(readShareHash(""), { status: HASH_STATUS.EMPTY, plan: null });
+  assert.deepEqual(readShareHash("#grid"), { status: HASH_STATUS.EMPTY, plan: null });
+  const validLink = `#p=${encodeURIComponent(
+    JSON.stringify({ v: 1, d: "2026-06-15", r: "UTC", p: [["Ada", "Europe/Istanbul", 9, 17]] }),
+  )}`;
+  const loaded = readShareHash(validLink);
+  assert.equal(loaded.status, HASH_STATUS.VALID);
+  assert.equal(loaded.plan.date, "2026-06-15");
+  assert.equal(readShareHash("#p=not-json").status, HASH_STATUS.INVALID);
+  assert.equal(readShareHash("#p=%7B%22v%22%3A2%7D").status, HASH_STATUS.INVALID);
+});
+
+test("work hours are normalized at every boundary", () => {
+  assert.equal(normalizeWorkHour(0, 9), 0);
+  assert.equal(normalizeWorkHour(23, 9), 23);
+  assert.equal(normalizeWorkHour("17", 9), 17);
+  assert.equal(normalizeWorkHour(24, 9), 9);
+  assert.equal(normalizeWorkHour(-1, 17), 17);
+  assert.equal(normalizeWorkHour(9.5, 9), 9);
+  assert.equal(normalizeWorkHour(null, 9), 9);
+  assert.equal(normalizeWorkHour("", 17), 17);
+});
+
+test("a plan stores zone identifiers in catalog form", () => {
+  const plan = normalizePlan({
+    ...valid(),
+    referenceZone: "europe/istanbul",
+    participants: [{ label: "Ada", zone: "AMERICA/NEW_YORK", workStart: 9, workEnd: 17 }],
+  });
+  assert.equal(plan.referenceZone, "Europe/Istanbul");
+  assert.equal(plan.participants[0].zone, "America/New_York");
 });

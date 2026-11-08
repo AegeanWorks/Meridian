@@ -4,11 +4,15 @@ import assert from "node:assert/strict";
 import {
   AWAKE,
   DEFAULT_WORK,
+  MAX_SYNCED_DURATION,
   bestSlotFor,
   bestWindows,
   buildDayPlan,
   hourCategory,
   isWorkHour,
+  nextDuration,
+  normalizeDuration,
+  normalizeSlot,
   overlapColumns,
   slotQuality,
   slotSummary,
@@ -188,4 +192,47 @@ test("the best slot prefers a shared work window and fits the request", () => {
 test("defaults and constants stay stable", () => {
   assert.deepEqual(DEFAULT_WORK, { start: 9, end: 17 });
   assert.deepEqual(AWAKE, { start: 7, end: 22 });
+  assert.equal(MAX_SYNCED_DURATION, 12);
+});
+
+test("slot values are normalized before they reach the schedule", () => {
+  assert.deepEqual(normalizeSlot({ start: 10, hours: 3 }), { start: 10, hours: 3 });
+  assert.deepEqual(normalizeSlot({ start: "11", hours: "2" }), { start: 11, hours: 2 });
+  assert.deepEqual(normalizeSlot({ start: 4.9, hours: 2.9 }), { start: 4, hours: 2 });
+  assert.deepEqual(normalizeSlot({ start: 23, hours: 5 }), { start: 23, hours: 1 });
+  assert.deepEqual(normalizeSlot({ start: 4, hours: 0 }), { start: 4, hours: 1 });
+  assert.deepEqual(normalizeSlot({ start: -3, hours: 2 }), null);
+  assert.deepEqual(normalizeSlot({ start: 24, hours: 2 }), null);
+  assert.deepEqual(normalizeSlot({ start: Number.NaN, hours: 2 }), null);
+  assert.deepEqual(normalizeSlot({ start: 4, hours: Number.NaN }), null);
+  assert.deepEqual(normalizeSlot({ start: 4, hours: Number.POSITIVE_INFINITY }), null);
+  assert.deepEqual(normalizeSlot(null), null);
+});
+
+test("the duration preference is bounded and follows the named sync rule", () => {
+  assert.equal(normalizeDuration(3), 3);
+  assert.equal(normalizeDuration("6"), 6);
+  assert.equal(normalizeDuration(0), 1);
+  assert.equal(normalizeDuration(99), 24);
+  assert.equal(normalizeDuration(Number.NaN), 1);
+  assert.equal(nextDuration(1, 3), 3);
+  assert.equal(nextDuration(3, 3), 3);
+  assert.equal(nextDuration(1, 13), 1);
+  assert.equal(nextDuration(6, 12), 12);
+  assert.equal(nextDuration(6, 13), 6);
+  assert.equal(nextDuration(6, Number.NaN), 6);
+});
+
+test("a non-finite preferred length still yields a usable best slot", () => {
+  const plan = buildDayPlan({
+    date: "2026-06-15",
+    referenceZone: "Europe/Istanbul",
+    participants: [
+      person("p1", "Ada", "Europe/Istanbul"),
+      person("p2", "Sam", "Europe/London"),
+    ],
+  });
+  assert.deepEqual(bestSlotFor(plan, Number.NaN), { start: 11, hours: 1 });
+  assert.deepEqual(bestSlotFor(plan, 0), { start: 11, hours: 1 });
+  assert.deepEqual(bestSlotFor(plan, 99), { start: 11, hours: 6 });
 });
