@@ -1,8 +1,8 @@
 # Progressive History Audit
 
 Requested sequence: windows `1->3`, `1->6`, `1->9`, `1->12`, `1->15`,
-`1->18`, then `1->End`. Each window reviews the commits added since the
-previous window against the current tree, fixes only what still reproduces,
+`1->18`, `1->21`, then `1->End`. Each window reviews the commits added since
+the previous window against the current tree, fixes only what still reproduces,
 and records the evidence. A finding is closed only when a test or a live probe
 proves the fixed behaviour.
 
@@ -17,7 +17,7 @@ proves the fixed behaviour.
 | 1->15 | `2520db5`, `e7c0ad6`, `615e040` | **done** | `index.html` has no third-party URL and every local reference exists, but nothing enforced that embeddable-build contract | Add `tests/contract.test.js`: every `src`/`href` is local or a fragment, and every local path resolves; version 0.1.1 and the UI/ledger records checked |
 | 1->18 | `981454d`, `9ccb6bd`, `a373efe` | **done** | The 2026-11-03 mobile screenshot's clip was a Chromium `--window-size` capture artifact; a true 390px CDP viewport fits (375/375, add right 235, reset right 346, side right 363). The state-machine core commit is intact. | Add a 390px dogfood overflow check; replace the README mobile keeper with a true 390x844 CDP capture and record it in `media.json` |
 | 1->21 | `0fd41da`, `6edef83`, `bf843fe` | **done** | The state-machine UI and docs are intact; the documented P10 gap still reproduced: the skip link set `location.hash` to `#grid` and left focus off the timeline | Intercept the skip link, focus `#grid` via `tabindex="-1"`, keep `#p=`, add a dogfood assertion, and mark P10 implemented in the state-machine docs |
-| 1->End | remaining commits | pending | - | - |
+| 1->End | `d67b702` | **done** | The final doc correction is present, but the log still omitted 1->21 and left 1->End pending | Verify the corrections and counts, add 1->21 to the sequence, mark 1->End done, and check the first commit's contracts still hold |
 
 ## Window 1->3
 
@@ -231,3 +231,41 @@ Evidence:
   `active` is `grid`.
 - `npm test` -> 63/63; `npm run dogfood` -> `[OK]` including
   `skip-link hash preservation`.
+
+## Window 1->End
+
+Commit: the final documentation correction (`d67b702`).
+
+Findings:
+
+- The corrected inventory is present: UI interaction state has one gap and the
+  total is **11 sound, 9 with gaps**; the proposals doc says the five suites
+  carrying the boundary tests failed on the old exports.
+- The log itself still omitted the `1->21` window from its sequence and left
+  `1->End` pending.
+- No code gap reproduced.
+
+Fix:
+
+- The sequence line now includes `1->21`; the `1->End` row is marked done.
+- Counts rechecked: 10 Node suites and 63 tests; 20 state machines; 10
+  implemented proposals; 4 deferred.
+
+## Back to the beginning
+
+All 22 commits that existed when the audit began are covered by the eight
+windows. The first commit's contracts still hold: the AL-1.1 LICENSE and REUSE
+metadata are present, `.aikit/` carries the record and ledger, and
+`package.json` still has zero dependencies.
+
+A final live check of the promises the windows touched: the page is
+self-contained, the local LICENSE route works, both 390px and 1280px layouts
+fit, the plan hash survives the skip link, and the state-machine registry
+matches the runtime vocabularies.
+
+Evidence:
+
+- `npm test` -> 63/63 across 10 suites; `npm run dogfood` -> `[OK]`;
+  `python aikit.py check meridian --strict` -> 4/4 gates.
+- `git log --reverse` covers commits 1..22; every window through `1->End` is
+  marked **done** in the table above.

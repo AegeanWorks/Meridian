@@ -5,22 +5,12 @@
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794169055.8098125,
+    "updated_at": 1794169168.2249792,
     "owner": "commandcode:goal",
     "started_by": "commandcode:goal",
     "continuations": []
   },
   "checkpoints": [
-    {
-      "task_id": "build-static-timezone-planner",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'build-static-timezone-planner' completed successfully.",
-      "status": "completed",
-      "timestamp": 1793387477.4625714,
-      "timestamp_str": "2026-10-30 22:11:17",
-      "agent": "kilo:1"
-    },
     {
       "task_id": "planner-polish",
       "phase": "phase 3",
@@ -306,6 +296,22 @@
         "state": "windows 1->21 complete",
         "next": "commit/push, then window 1->End (doc corrections) and final task completion",
         "evidence": "npm test 63/63, dogfood [OK]"
+      }
+    },
+    {
+      "task_id": "meridian-history-audit",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[6/6] Window 1->End done: the final doc corrections are present; the audit sequence now includes 1->21; all eight windows are marked done; the back-to-the-beginning contracts hold; tests 63/63; dogfood [OK]; media audit clean. checklists: passed.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794169168.2249792,
+      "timestamp_str": "2026-11-08 23:19:28",
+      "agent": "commandcode:goal",
+      "handoff": {
+        "state": "all windows audited and pushed",
+        "next": "complete the task",
+        "evidence": "npm test 63/63, npm run dogfood [OK], media audit clean"
       }
     }
   ]
