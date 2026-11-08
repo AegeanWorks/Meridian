@@ -15,7 +15,7 @@ proves the fixed behaviour.
 | 1->9 | `ba44c75`, `07d1f4d`, `2a2ac29` | **done** | The live site returned 200 and every PNG matched the recorded dimensions, but nothing guarded `.aikit/media.json` or the README asset references; either could drift silently | Add `tests/media.test.js`: every recorded asset exists, is a PNG and matches its recorded width/height; every README `assets/` reference exists |
 | 1->12 | `45b2553`, `d8bf86e`, `4c837f1` | **done** | Reset restored the plan and cleared the slot, but its preserved meeting length and confirmation toast were untested; the README did not say the length is kept | Capture the length before Reset, assert it is unchanged and the toast appears; document the kept length; the screenshot is already media-guarded |
 | 1->15 | `2520db5`, `e7c0ad6`, `615e040` | **done** | `index.html` has no third-party URL and every local reference exists, but nothing enforced that embeddable-build contract | Add `tests/contract.test.js`: every `src`/`href` is local or a fragment, and every local path resolves; version 0.1.1 and the UI/ledger records checked |
-| 1->18 | next 3 commits | pending | - | - |
+| 1->18 | `981454d`, `9ccb6bd`, `a373efe` | **done** | The 2026-11-03 mobile screenshot's clip was a Chromium `--window-size` capture artifact; a true 390px CDP viewport fits (375/375, add right 235, reset right 346, side right 363). The state-machine core commit is intact. | Add a 390px dogfood overflow check; replace the README mobile keeper with a true 390x844 CDP capture and record it in `media.json` |
 | 1->21 | next 3 commits | pending | - | - |
 | 1->End | remaining commits | pending | - | - |
 
@@ -164,3 +164,38 @@ Evidence:
 
 - `grep` for `https?://` in `index.html` -> no matches.
 - `npm test` -> 63/63 across 10 suites; `npm run dogfood` -> `[OK]`.
+
+## Window 1->18
+
+Commits: the live-catalog ledger (`981454d`), the desktop/mobile keepers
+(`9ccb6bd`) and the state-machine core boundaries (`a373efe`).
+
+Findings:
+
+- The old mobile screenshot caption said the calendar button clipped. That was
+  a capture artifact: Chromium's `--window-size=390` clamps the layout
+  viewport, so the image was a crop of a wider page, not a CSS defect.
+- At a true 390px emulated viewport the current build fits: `scrollWidth`/
+  `clientWidth` 375/375, Add-to-calendar right 235, Reset right 346, side panel
+  right 363.
+- The `a373efe` state-machine core is intact: the 20-machine registry, the
+  version/date/slot/work-hour/zone guards and their tests all pass.
+- The gaps were a missing 390px regression check and the stale mobile keeper
+  in the README and media record.
+
+Fix:
+
+- The dogfood sets 390x844, asserts no page-level horizontal overflow, and
+  checks that the Add button, Reset and side panel stay inside the viewport.
+- A true 390x844 CDP capture replaced the old mobile keeper: the new
+  `assets/screenshots/2026-11-08-mobile.png` is approved in `media.json`
+  (commit `ca4fae6`) and the README points at it.
+
+Evidence:
+
+- `[390px]` measurements -> `scrollWidth 375`, `clientWidth 375`,
+  `addRight 235`, `resetRight 346`, `sideRight 363`.
+- The 390x844 capture was reviewed: header actions wrap, Add to calendar,
+  Reset and both participant fields are fully visible.
+- `npm test` -> 63/63; `npm run dogfood` -> `[OK]` including `390px mobile fit`;
+  `python aikit.py media audit meridian` -> `clean`.

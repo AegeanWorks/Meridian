@@ -99,6 +99,25 @@
         "score": 88,
         "reviewed_at": "2026-11-03"
       }
+    },
+    {
+      "path": "assets/screenshots/2026-11-08-mobile.png",
+      "alt": "Meridian on a 390px phone at 2026-11-08",
+      "caption": "True 390x844 CDP capture: the reference field, Copy link, Add to calendar and Reset all fit; the header actions wrap and the People panel stacks.",
+      "commit": "ca4fae632fbc1dc66ca5e80be71593e0912f1355",
+      "taken_at": "2026-11-08",
+      "viewport": "390x844",
+      "width": 390,
+      "height": 844,
+      "status": "approved",
+      "review": {
+        "status": "approved",
+        "reviewer": "commandcode:goal",
+        "method": "vision",
+        "notes": "True 390px emulated viewport: header actions wrap, Add to calendar is fully visible, Reset and both participant fields fit; no page-level horizontal overflow.",
+        "score": 90,
+        "reviewed_at": "2026-11-08"
+      }
     }
   ]
 }

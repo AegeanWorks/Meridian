@@ -5,27 +5,12 @@
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794167561.6032777,
+    "updated_at": 1794168810.1985612,
     "owner": "commandcode:goal",
     "started_by": "commandcode:goal",
     "continuations": []
   },
   "checkpoints": [
-    {
-      "task_id": "build-static-timezone-planner",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[5/5] Published and deployed: media reviewed (logo, social preview, screenshot) and applied; topics recorded; UI task opened, verified and finished (digest recorded); repository AegeanWorks/Meridian created public with description and 16 topics; GitHub Pages enabled on master root and built; live at https://aegeanworks.github.io/Meridian/ with every asset returning 200. README now links the live site. checklists: passed.",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793386094.0655293,
-      "timestamp_str": "2026-10-30 21:48:14",
-      "agent": "kilo:1",
-      "handoff": {
-        "state": "Pages built, dossier media copied but uncommitted in projects/AegeanWorks",
-        "next": "commit and push the README live-link edit, run \u0007ikit.py media audit"
-      }
-    },
     {
       "task_id": "build-static-timezone-planner",
       "phase": "phase 4",
@@ -303,6 +288,22 @@
         "state": "window 1->15 verified",
         "next": "commit/push, then window 1->18",
         "evidence": "npm test 63/63, npm run dogfood [OK]"
+      }
+    },
+    {
+      "task_id": "meridian-history-audit",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[6/6] Window 1->18 done: the old mobile clip was a Chromium --window-size capture artifact; a true 390px viewport fits (375/375, add 235, reset 346, side 363); dogfood now checks 390px; refreshed keeper 2026-11-08-mobile.png approved in media.json; the state-machine core is intact; tests 63/63; dogfood [OK]; media audit clean. checklists: passed.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794168810.1985612,
+      "timestamp_str": "2026-11-08 23:13:30",
+      "agent": "commandcode:goal",
+      "handoff": {
+        "state": "windows 1->18 complete",
+        "next": "commit/push, then window 1->21 (state-machine UI + ledger) and 1->End",
+        "evidence": "npm test 63/63, dogfood [OK], media audit clean"
       }
     }
   ]

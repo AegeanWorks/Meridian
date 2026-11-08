@@ -287,6 +287,46 @@ async function main() {
       if (desktopGrid.scrollWidth > desktopGrid.clientWidth + 1) {
         throw new Error(`the 24-hour grid overflows at 1280px: ${JSON.stringify(desktopGrid)}`);
       }
+
+      await connection.send("Emulation.setDeviceMetricsOverride", {
+        width: 390,
+        height: 844,
+        deviceScaleFactor: 1,
+        mobile: false,
+      });
+      await wait(150);
+      let mobileLayout;
+      try {
+        mobileLayout = await connection.evaluate(`(() => {
+          const doc = document.documentElement;
+          const add = document.getElementById('download-ics').getBoundingClientRect();
+          const reset = document.getElementById('plan-reset').getBoundingClientRect();
+          const side = document.querySelector('.side').getBoundingClientRect();
+          return {
+            scrollWidth: doc.scrollWidth,
+            clientWidth: doc.clientWidth,
+            addRight: Math.round(add.right),
+            resetRight: Math.round(reset.right),
+            sideRight: Math.round(side.right),
+          };
+        })()`);
+      } finally {
+        await connection.send("Emulation.setDeviceMetricsOverride", {
+          width: 1440,
+          height: 960,
+          deviceScaleFactor: 1,
+          mobile: false,
+        });
+        await wait(150);
+      }
+      if (
+        mobileLayout.scrollWidth > mobileLayout.clientWidth + 1 ||
+        mobileLayout.addRight > mobileLayout.clientWidth ||
+        mobileLayout.resetRight > mobileLayout.clientWidth ||
+        mobileLayout.sideRight > mobileLayout.clientWidth
+      ) {
+        throw new Error(`the layout overflows at 390px: ${JSON.stringify(mobileLayout)}`);
+      }
     }
 
     const malformedHash = await connection.evaluate(`(() => {
@@ -570,7 +610,7 @@ async function main() {
     }
 
     console.log(
-      "[OK] Meridian dogfood: default plan, 1280px desktop grid fit, malformed-link feedback, impossible-date refusal, non-finite slot normalisation, lowercase zone canonicalisation, add/remove people, drag selection across rows, cancelled drag, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links and Reset.",
+      "[OK] Meridian dogfood: default plan, 1280px desktop grid fit, 390px mobile fit, malformed-link feedback, impossible-date refusal, non-finite slot normalisation, lowercase zone canonicalisation, add/remove people, drag selection across rows, cancelled drag, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links and Reset.",
     );
     return 0;
   } catch (error) {
