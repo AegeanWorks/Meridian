@@ -81,6 +81,7 @@ does not mean every transition is reachable from the UI.
    unnamed `<= 12` rule, so long drags silently diverge.
 5. **The URL fragment has two owners.** The plan codec and the skip link both
    write `location.hash`; a11y navigation can drop the shareable plan.
+   **Fixed by P10.**
 6. **Empty states are implicit but sound.** `start === end` means "no work
    day"; no shared work window falls back to awake; no slot disables calendar
    actions. These are correct but undocumented.
@@ -104,9 +105,9 @@ Eight of the nine gap machines are closed at their boundaries:
 - zone form (P9): `canonicalZone` stores the catalog casing.
 - drag (P8): `pointercancel` and window blur end the gesture.
 
-The ninth, URL fragment ownership (P10), is deferred: the plan stays intact in
-memory and Copy link restores the hash, but the skip link can still replace the
-fragment. P1 makes every machine above readable at `meridian.machines`.
+The ninth, URL fragment ownership (P10), is closed: the skip link now moves
+focus to the timeline without replacing the plan hash. P1 makes every machine
+above readable at `meridian.machines`.
 
 ## Verification pass (findings re-checked)
 

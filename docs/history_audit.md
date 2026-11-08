@@ -16,7 +16,7 @@ proves the fixed behaviour.
 | 1->12 | `45b2553`, `d8bf86e`, `4c837f1` | **done** | Reset restored the plan and cleared the slot, but its preserved meeting length and confirmation toast were untested; the README did not say the length is kept | Capture the length before Reset, assert it is unchanged and the toast appears; document the kept length; the screenshot is already media-guarded |
 | 1->15 | `2520db5`, `e7c0ad6`, `615e040` | **done** | `index.html` has no third-party URL and every local reference exists, but nothing enforced that embeddable-build contract | Add `tests/contract.test.js`: every `src`/`href` is local or a fragment, and every local path resolves; version 0.1.1 and the UI/ledger records checked |
 | 1->18 | `981454d`, `9ccb6bd`, `a373efe` | **done** | The 2026-11-03 mobile screenshot's clip was a Chromium `--window-size` capture artifact; a true 390px CDP viewport fits (375/375, add right 235, reset right 346, side right 363). The state-machine core commit is intact. | Add a 390px dogfood overflow check; replace the README mobile keeper with a true 390x844 CDP capture and record it in `media.json` |
-| 1->21 | next 3 commits | pending | - | - |
+| 1->21 | `0fd41da`, `6edef83`, `bf843fe` | **done** | The state-machine UI and docs are intact; the documented P10 gap still reproduced: the skip link set `location.hash` to `#grid` and left focus off the timeline | Intercept the skip link, focus `#grid` via `tabindex="-1"`, keep `#p=`, add a dogfood assertion, and mark P10 implemented in the state-machine docs |
 | 1->End | remaining commits | pending | - | - |
 
 ## Window 1->3
@@ -199,3 +199,35 @@ Evidence:
   Reset and both participant fields are fully visible.
 - `npm test` -> 63/63; `npm run dogfood` -> `[OK]` including `390px mobile fit`;
   `python aikit.py media audit meridian` -> `clean`.
+
+## Window 1->21
+
+Commits: explicit state machines in the UI (`0fd41da`), the verification ledger
+(`6edef83`) and the completed ledger (`bf843fe`).
+
+Findings:
+
+- The state-machine UI wiring, the 20-machine registry and both docs are
+  intact; the unit and browser gates still cover them.
+- The documented P10 gap still reproduced: clicking `.skip` changed
+  `#p=...` to `#grid` and left `document.activeElement` empty. The plan
+  survived in memory, but the address bar lost the shareable link.
+- The skip path therefore had two owners for the fragment, exactly as the
+  inventory said.
+
+Fix:
+
+- `index.html` gives `#grid` `tabindex="-1"`; `bindEvents` intercepts the skip
+  click, focuses the grid and scrolls it into view; the CSS adds a visible
+  focus ring and a scroll margin below the sticky header.
+- The dogfood clicks the skip link and asserts `#p=` is unchanged and the grid
+  is the active element.
+- P10 is now **PASS, implemented** in `docs/state_machine_proposals.md` and the
+  inventory's cross-cutting finding is marked closed.
+
+Evidence:
+
+- Before: `{"hash":"#grid","active":""}`; after: the hash is unchanged and
+  `active` is `grid`.
+- `npm test` -> 63/63; `npm run dogfood` -> `[OK]` including
+  `skip-link hash preservation`.

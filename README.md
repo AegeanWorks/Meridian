@@ -50,7 +50,7 @@ Meridian is a static site. There is no build step, no server, no account and no 
 ### Keyboard and accessibility
 - Tab to any hour cell; **←/→** move the slot, **Home/End** jump to the edges, **↑/↓** move between rows, **Enter/Space** select.
 - Live clocks refresh every 20 seconds; the *now* marker appears when the shown day is today in the reference zone.
-- Skip link, labelled controls, visible focus rings and reduced-motion support are built in.
+- The skip link moves focus to the timeline without replacing the plan in the address bar; labelled controls, visible focus rings and reduced-motion support are built in.
 
 ## 📦 What's Inside
 

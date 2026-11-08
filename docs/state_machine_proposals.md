@@ -1,7 +1,7 @@
 # State-Machine Proposals
 
 Status: analysis and verification of the fixes proposed after
-`docs/state_machines.md`. Nine proposals pass and are implemented; five are
+`docs/state_machines.md`. Ten proposals pass and are implemented; four are
 deferred with the reason. The inventory is the source of the gaps.
 
 ## Decision criteria
@@ -31,7 +31,7 @@ A proposal passes only when **all** hold:
 | P7 | Name the duration sync rule and bound duration values | Med | Med | High | Low | **PASS** |
 | P8 | End a drag on `pointercancel` and window blur | Med | Med | Med | Low | **PASS** |
 | P9 | Canonicalize zone identifiers on input | Med | Med | High | Med | **PASS** |
-| P10 | Give the plan exclusive ownership of the URL fragment | Med | Low | Med | Med | Deferred |
+| P10 | Give the plan exclusive ownership of the URL fragment | High | Low | Med | Low | **PASS, implemented** |
 | P11 | Warn when a work day is zero-length | Low | Med | Med | Med | Deferred |
 | P12 | Choose column-bound or instant-bound slots across date/zone changes | Med | Low | Med | Med | Deferred |
 | P13 | Extract the whole UI state into a pure reducer | Low | High | High | High | Deferred |
@@ -150,13 +150,20 @@ produce a non-canonical share link; valid aliases outside the catalog still work
 The blast radius is the zone input boundary only, covered by unit tests and a
 dogfood step.
 
+### P10 - fragment ownership
+
+The skip link now intercepts its click, moves focus to the timeline (`#grid`
+has `tabindex="-1"` and a visible focus ring) and leaves the plan hash
+untouched. The native anchor remains for no-JS. `bindEvents` prevents the
+default fragment navigation and calls `scrollIntoView`.
+
+Why it passes: the accessible skip path no longer drops the shareable plan; the
+change is one handler plus a tabindex, and the Copy link path is unchanged. The
+dogfood clicks the skip link and asserts `#p=` is unchanged and the grid has
+focus.
+
 ## Deferred proposals and why
 
-- **P10 (fragment ownership).** The skip link's `#grid` replaces the plan hash
-  until the next write. Fixing it means changing the accessible skip-link
-  behaviour (intercept the click and move focus) or introducing a second state
-  channel. That is an accessibility/product decision, not a mechanical guard;
-  the plan remains intact in memory and the Copy link button restores the hash.
 - **P11 (zero-length work day).** `start === end` meaning "no work day" is
   pinned by a test and is a coherent choice. A warning is a product decision;
   the machine is now documented as `zero-length`.

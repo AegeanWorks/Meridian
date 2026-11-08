@@ -285,6 +285,12 @@ function fillHourSelect(select, value) {
 }
 
 function bindEvents() {
+  document.querySelector(".skip").addEventListener("click", (event) => {
+    event.preventDefault();
+    ui.grid.focus({ preventScroll: true });
+    ui.grid.scrollIntoView({ block: "start" });
+  });
+
   ui.datePrev.addEventListener("click", () => setDate(stepDateISO(state.plan.date, -1)));
   ui.dateNext.addEventListener("click", () => setDate(stepDateISO(state.plan.date, 1)));
   ui.dateToday.addEventListener("click", () =>

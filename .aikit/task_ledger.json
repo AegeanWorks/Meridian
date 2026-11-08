@@ -5,26 +5,12 @@
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794168810.1985612,
+    "updated_at": 1794169055.8098125,
     "owner": "commandcode:goal",
     "started_by": "commandcode:goal",
     "continuations": []
   },
   "checkpoints": [
-    {
-      "task_id": "build-static-timezone-planner",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[5/5] Media finalized for the dossier: hand-authored SVG identity rasterized to logo.png (512) and social-preview.png (1280x640), reviewed and approved; screenshot review recorded at the shipped commit; manifest corrected (has_ui true, web, product palette, PNG paths). checklists: passed. Gates 4/4.",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793387304.051744,
-      "timestamp_str": "2026-10-30 22:08:24",
-      "agent": "kilo:1",
-      "handoff": {
-        "next": "commit and push the PNG assets and README preview swap, then let the dossier builder fetch them from the published repo"
-      }
-    },
     {
       "task_id": "build-static-timezone-planner",
       "phase": "completed",
@@ -304,6 +290,22 @@
         "state": "windows 1->18 complete",
         "next": "commit/push, then window 1->21 (state-machine UI + ledger) and 1->End",
         "evidence": "npm test 63/63, dogfood [OK], media audit clean"
+      }
+    },
+    {
+      "task_id": "meridian-history-audit",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[6/6] Window 1->21 done: P10 closed; the skip link focuses #grid (tabindex=-1, focus ring, scroll margin) and leaves #p= intact; dogfood asserts hash preservation and focus; P10 is implemented in both state-machine docs; tests 63/63; dogfood [OK]. checklists: passed.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794169055.8098125,
+      "timestamp_str": "2026-11-08 23:17:35",
+      "agent": "commandcode:goal",
+      "handoff": {
+        "state": "windows 1->21 complete",
+        "next": "commit/push, then window 1->End (doc corrections) and final task completion",
+        "evidence": "npm test 63/63, dogfood [OK]"
       }
     }
   ]

@@ -329,6 +329,19 @@ async function main() {
       }
     }
 
+    const skipLink = await connection.evaluate(`(() => {
+      const good = location.hash;
+      document.querySelector('.skip').click();
+      return {
+        good,
+        hash: location.hash,
+        active: document.activeElement?.id ?? '',
+      };
+    })()`);
+    if (!skipLink.good.startsWith('#p=') || skipLink.hash !== skipLink.good || skipLink.active !== 'grid') {
+      throw new Error(`the skip link changed the plan hash or missed the grid: ${JSON.stringify(skipLink)}`);
+    }
+
     const malformedHash = await connection.evaluate(`(() => {
       const before = globalThis.meridian.plan.date;
       const good = location.hash;
@@ -610,7 +623,7 @@ async function main() {
     }
 
     console.log(
-      "[OK] Meridian dogfood: default plan, 1280px desktop grid fit, 390px mobile fit, malformed-link feedback, impossible-date refusal, non-finite slot normalisation, lowercase zone canonicalisation, add/remove people, drag selection across rows, cancelled drag, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links and Reset.",
+      "[OK] Meridian dogfood: default plan, 1280px desktop grid fit, 390px mobile fit, skip-link hash preservation, malformed-link feedback, impossible-date refusal, non-finite slot normalisation, lowercase zone canonicalisation, add/remove people, drag selection across rows, cancelled drag, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links and Reset.",
     );
     return 0;
   } catch (error) {
