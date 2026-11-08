@@ -176,8 +176,12 @@ dogfood step.
 
 - Baseline before edits: `npm test` -> **47 tests, 47 pass**; `npm run dogfood`
   -> **[OK]**.
-- Failing-first: the new unit tests fail on the old exports; the new dogfood
-  assertions fail on the old UI (impossible date accepted, malformed hash
-  silent, cancelled drag still resizes).
-- After implementation: full `npm test` and `npm run dogfood` results are
-  recorded in the task checkpoint and the final report.
+- Failing-first: the five new suites failed on the old exports; the new dogfood
+  assertion failed on the old UI with `a malformed share hash was not reported`.
+- After implementation: `npm test` -> **59 tests, 59 pass** across 8 suites;
+  `npm run dogfood` -> **[OK]** with the malformed-link, impossible-date,
+  non-finite-slot, lowercase-zone, cancelled-drag and AX-surface checks;
+  `python aikit.py check meridian --strict` -> **4/4 gates** (test, hygiene,
+  guidelines, secrets).
+- Registry: `meridian.machines` exposes 20 machines; the consistency test fails
+  if a transition target or a runtime vocabulary drifts.
