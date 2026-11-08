@@ -15,7 +15,7 @@ from comments. Line anchors are from the pre-fix tree.
 |---|---|---|
 | Plan and URL state | 9 | Mixed: some guards, several ad-hoc transitions |
 | Derived schedule state | 5 | Pure and tested |
-| UI interaction state | 5 | Ad-hoc (two gaps) |
+| UI interaction state | 5 | Ad-hoc (one gap) |
 | Static server | 1 | Guarded and tested |
 | **Total** | **20** | **11 sound, 9 with gaps** |
 

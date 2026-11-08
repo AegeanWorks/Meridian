@@ -176,8 +176,9 @@ dogfood step.
 
 - Baseline before edits: `npm test` -> **47 tests, 47 pass**; `npm run dogfood`
   -> **[OK]**.
-- Failing-first: the five new suites failed on the old exports; the new dogfood
-  assertion failed on the old UI with `a malformed share hash was not reported`.
+- Failing-first: the five suites carrying the new boundary tests failed on the
+  old exports; the new dogfood assertion failed on the old UI with
+  `a malformed share hash was not reported`.
 - After implementation: `npm test` -> **59 tests, 59 pass** across 8 suites;
   `npm run dogfood` -> **[OK]** with the malformed-link, impossible-date,
   non-finite-slot, lowercase-zone, cancelled-drag and AX-surface checks;
