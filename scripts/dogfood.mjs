@@ -526,7 +526,14 @@ async function main() {
       throw new Error(`a pasted share hash was not loaded: ${JSON.stringify(randomPlan)}`);
     }
 
-    await connection.evaluate("document.getElementById('plan-reset').click()");
+    const resetBefore = await connection.evaluate(`(() => {
+      const before = {
+        duration: globalThis.meridian.duration,
+        value: document.getElementById('duration').value,
+      };
+      document.getElementById('plan-reset').click();
+      return before;
+    })()`);
     await wait(300);
     const reset = await connection.evaluate(`(() => ({
       participants: globalThis.meridian.plan.participants.length,
@@ -538,6 +545,9 @@ async function main() {
       slot: globalThis.meridian.slot,
       summaryHidden: document.getElementById('summary').hidden,
       hash: location.hash,
+      duration: globalThis.meridian.duration,
+      durationValue: document.getElementById('duration').value,
+      message: document.getElementById('status').textContent,
     }))()`);
     if (reset.participants !== 2 || reset.rows !== 2 || reset.cells !== 48) {
       throw new Error(`Reset did not restore the example plan: ${JSON.stringify(reset)}`);
@@ -547,6 +557,12 @@ async function main() {
     }
     if (reset.slot !== null || !reset.summaryHidden || !reset.hash.includes("#p=")) {
       throw new Error(`Reset did not clear the selected slot: ${JSON.stringify(reset)}`);
+    }
+    if (reset.duration !== resetBefore.duration || reset.durationValue !== resetBefore.value) {
+      throw new Error(`Reset changed the meeting length: ${JSON.stringify({ resetBefore, reset })}`);
+    }
+    if (!/Plan reset/.test(reset.message)) {
+      throw new Error(`Reset did not confirm: ${JSON.stringify(reset.message)}`);
     }
 
     if (connection.errors.length) {

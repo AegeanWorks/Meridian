@@ -45,7 +45,7 @@ Meridian is a static site. There is no build step, no server, no account and no 
 - **Take it to a calendar.** *Add to calendar* downloads an RFC 5545 `.ics` file with the event in UTC, escaped, folded and importable by any calendar app.
 - **Zero dependencies.** No frameworks, no fonts, no CDN, no analytics. A strict Content-Security-Policy allows only the page's own files.
 
-**Reset** in the People panel restores the two-zone example for today, keeping your reference zone, so a demo or a wrong turn is one click from a clean slate.
+**Reset** in the People panel restores the two-zone example for today, keeping your reference zone and meeting length, so a demo or a wrong turn is one click from a clean plan.
 
 ### Keyboard and accessibility
 - Tab to any hour cell; **←/→** move the slot, **Home/End** jump to the edges, **↑/↓** move between rows, **Enter/Space** select.

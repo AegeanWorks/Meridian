@@ -13,7 +13,7 @@ proves the fixed behaviour.
 | 1->3 | `0f7aa00`, `62293a1`, `99b468f` | **done** | The footer's `./LICENSE` link 404'd under `npm start`; the 24-hour grid overflowed at 1280px despite the "1280-1440" claim (`scrollWidth 900`, column `859`) | Serve `LICENSE` as `text/plain`; lower the grid floor from 900px to 840px; add server and 1280px dogfood assertions |
 | 1->6 | `cc67033`, `1d9af69`, `629cc5a` | **done** | The two-zone default always took the first non-reference guest, so Tokyo, Sydney and Kolkata opened with **zero** shared work windows; the README tree omitted `assets/screenshots/` | Rank guest zones by shared work, then shared awake, and add Tokyo/Sydney tests; list the screenshot directory; media audit stays clean |
 | 1->9 | `ba44c75`, `07d1f4d`, `2a2ac29` | **done** | The live site returned 200 and every PNG matched the recorded dimensions, but nothing guarded `.aikit/media.json` or the README asset references; either could drift silently | Add `tests/media.test.js`: every recorded asset exists, is a PNG and matches its recorded width/height; every README `assets/` reference exists |
-| 1->12 | next 3 commits | pending | - | - |
+| 1->12 | `45b2553`, `d8bf86e`, `4c837f1` | **done** | Reset restored the plan and cleared the slot, but its preserved meeting length and confirmation toast were untested; the README did not say the length is kept | Capture the length before Reset, assert it is unchanged and the toast appears; document the kept length; the screenshot is already media-guarded |
 | 1->15 | next 3 commits | pending | - | - |
 | 1->18 | next 3 commits | pending | - | - |
 | 1->21 | next 3 commits | pending | - | - |
@@ -110,3 +110,29 @@ Evidence:
 
 - `python aikit.py media audit meridian` -> `clean`.
 - `npm test` -> 62/62 across 9 suites; `npm run dogfood` -> `[OK]`.
+
+## Window 1->12
+
+Commits: the planner ledger completion (`45b2553`), the Reset control
+(`d8bf86e`) and its refreshed screenshot (`4c837f1`).
+
+Findings:
+
+- Reset worked: it restored the two-person example for today, kept the
+  reference zone, cleared the slot and hid the summary. The dogfood already
+  covered those transitions.
+- No functional bug reproduced. The gap was test and doc precision: nothing
+  asserted that Reset preserves the meeting length, and the README only said
+  the reference zone is kept.
+- The Reset screenshot is commit-stamped and validated by the media guard.
+
+Fix:
+
+- The dogfood captures the duration and the Length selector before Reset,
+  asserts both are unchanged afterwards, and asserts the `Plan reset` toast.
+- The README now says Reset keeps the reference zone **and** meeting length.
+
+Evidence:
+
+- `npm test` -> 62/62; `npm run dogfood` -> `[OK]` including the preserved
+  length and Reset toast; `python aikit.py media audit meridian` -> `clean`.
