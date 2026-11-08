@@ -3,31 +3,15 @@
   "active_task": {
     "task_id": "meridian-history-audit",
     "last_phase": "phase 4",
-    "active_phase": 4,
-    "status": "in_progress",
+    "active_phase": 5,
+    "status": "completed",
     "updated_at": 1794169168.2249792,
     "owner": "commandcode:goal",
     "started_by": "commandcode:goal",
-    "continuations": []
+    "continuations": [],
+    "completed_at": 1794169205.829008
   },
   "checkpoints": [
-    {
-      "task_id": "planner-polish",
-      "phase": "phase 3",
-      "phase_num": 3,
-      "description": "[1/1] Add the missing Reset control the remove-error message already told users to press; it restores the two-zone example for today in the current reference zone and clears the slot. Harden the dogfood calendar-download wait into a poll after one flaky run, and cover Reset in the dogfood pass. checklists: passed. Gates 4/4, tests 47/47.",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793390177.491968,
-      "timestamp_str": "2026-10-30 22:56:17",
-      "agent": "kilo:1",
-      "impact_assessment": {
-        "why": "The UI told users to press Reset, but no such control existed.",
-        "benefits": "Removes a dead-end error path and gives a one-click way back to the demo state.",
-        "risks": "contract: none; dependency: none; concurrency: none; state: reset must not change the reference zone or leave a stale slot.",
-        "mitigation": "Reset reuses defaultPlan in the current zone and nulls the slot; dogfood asserts participants, rows, date sync, cleared slot and updated hash."
-      }
-    },
     {
       "task_id": "planner-polish",
       "phase": "phase 4",
@@ -313,6 +297,16 @@
         "next": "complete the task",
         "evidence": "npm test 63/63, npm run dogfood [OK], media audit clean"
       }
+    },
+    {
+      "task_id": "meridian-history-audit",
+      "phase": "completed",
+      "phase_num": 5,
+      "description": "Task 'meridian-history-audit' completed successfully.",
+      "status": "completed",
+      "timestamp": 1794169205.8290105,
+      "timestamp_str": "2026-11-08 23:20:05",
+      "agent": "commandcode:goal"
     }
   ]
 }
