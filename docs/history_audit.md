@@ -12,7 +12,7 @@ proves the fixed behaviour.
 |---|---|---|---|---|
 | 1->3 | `0f7aa00`, `62293a1`, `99b468f` | **done** | The footer's `./LICENSE` link 404'd under `npm start`; the 24-hour grid overflowed at 1280px despite the "1280-1440" claim (`scrollWidth 900`, column `859`) | Serve `LICENSE` as `text/plain`; lower the grid floor from 900px to 840px; add server and 1280px dogfood assertions |
 | 1->6 | `cc67033`, `1d9af69`, `629cc5a` | **done** | The two-zone default always took the first non-reference guest, so Tokyo, Sydney and Kolkata opened with **zero** shared work windows; the README tree omitted `assets/screenshots/` | Rank guest zones by shared work, then shared awake, and add Tokyo/Sydney tests; list the screenshot directory; media audit stays clean |
-| 1->9 | next 3 commits | pending | - | - |
+| 1->9 | `ba44c75`, `07d1f4d`, `2a2ac29` | **done** | The live site returned 200 and every PNG matched the recorded dimensions, but nothing guarded `.aikit/media.json` or the README asset references; either could drift silently | Add `tests/media.test.js`: every recorded asset exists, is a PNG and matches its recorded width/height; every README `assets/` reference exists |
 | 1->12 | next 3 commits | pending | - | - |
 | 1->15 | next 3 commits | pending | - | - |
 | 1->18 | next 3 commits | pending | - | - |
@@ -84,3 +84,29 @@ Evidence:
 - After: Tokyo -> Sydney, Sydney -> Tokyo, both with `work 1`; `npm test` ->
   60/60; `npm run dogfood` -> `[OK]`; `aikit.py media audit meridian` ->
   `clean` (0 pending reviews, 4 dossier screenshots).
+
+## Window 1->9
+
+Commits: the finished UI-task evidence (`ba44c75`), the live GitHub Pages link
+(`07d1f4d`) and the raster logo and social preview (`2a2ac29`).
+
+Findings:
+
+- The live link returned **200** and served Meridian, so it was not broken.
+- Every raster asset matched its record: `logo.png` 512x512,
+  `social-preview.png` 1280x640, screenshots 1440x900, 1440x900 and 390x844.
+- The gap was the absence of a guard: an approved PNG could disappear or be
+  replaced at another size, and a README `assets/` path could rot, without any
+  gate noticing.
+
+Fix:
+
+- `tests/media.test.js` reads `.aikit/media.json`, asserts every recorded asset
+  exists, is a PNG and matches any recorded width/height, then asserts every
+  `src="assets/..."` reference in the README resolves.
+- The README now reports nine suites and 62 tests.
+
+Evidence:
+
+- `python aikit.py media audit meridian` -> `clean`.
+- `npm test` -> 62/62 across 9 suites; `npm run dogfood` -> `[OK]`.

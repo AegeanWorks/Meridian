@@ -5,27 +5,12 @@
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794167161.4662015,
+    "updated_at": 1794167306.2113955,
     "owner": "commandcode:goal",
     "started_by": "commandcode:goal",
     "continuations": []
   },
   "checkpoints": [
-    {
-      "task_id": "build-static-timezone-planner",
-      "phase": "phase 3",
-      "phase_num": 3,
-      "description": "[4/5] Browser dogfood pass added (headless Edge/Chrome over CDP): default plan, add/remove people, drag selection across rows, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links; README rewritten with prerequisites, commands, features, accessibility, tree and deploy notes; hygiene fixes for third-party links (documented footer exception, relative test bases).",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793383786.9123888,
-      "timestamp_str": "2026-10-30 21:09:46",
-      "agent": "kilo:1",
-      "handoff": {
-        "next": "Phase 4 gates and ledger wrap-up",
-        "evidence": "npm run dogfood [OK]"
-      }
-    },
     {
       "task_id": "build-static-timezone-planner",
       "phase": "phase 4",
@@ -302,6 +287,22 @@
         "state": "window 1->6 fixed and verified",
         "next": "commit/push, then window 1->9",
         "evidence": "npm test 60/60, npm run dogfood [OK], media audit clean"
+      }
+    },
+    {
+      "task_id": "meridian-history-audit",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[3/6] Window 1->9 done: the live site returns 200; logo 512x512, social preview 1280x640, screenshots 1440x900/1440x900/390x844 all match their records; tests/media.test.js guards media existence, PNG dimensions and README asset references; tests 62/62; dogfood [OK]. checklists: passed.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794167306.2113955,
+      "timestamp_str": "2026-11-08 22:48:26",
+      "agent": "commandcode:goal",
+      "handoff": {
+        "state": "window 1->9 fixed and verified",
+        "next": "commit/push, then window 1->12",
+        "evidence": "npm test 62/62, npm run dogfood [OK], media audit clean"
       }
     }
   ]
