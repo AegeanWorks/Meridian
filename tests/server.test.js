@@ -15,6 +15,7 @@ test("only public entries resolve inside the project", () => {
   assert.ok(safePath("/", root).endsWith("index.html"));
   assert.ok(safePath("/src/core/time.js", root).endsWith("time.js"));
   assert.ok(safePath("/assets/logo.svg", root).endsWith("logo.svg"));
+  assert.ok(safePath("/LICENSE", root).endsWith("LICENSE"));
   assert.equal(safePath("/package.json", root), null);
   assert.equal(safePath("/README.md", root), null);
   assert.equal(safePath("/.aikit/project.json", root), null);
@@ -53,6 +54,11 @@ test("the local server serves the page and refuses everything else", async () =>
     const script = await fetch(`${url}src/core/time.js`);
     assert.equal(script.status, 200);
     assert.match(script.headers.get("content-type") ?? "", /text\/javascript/);
+
+    const license = await fetch(`${url}LICENSE`);
+    assert.equal(license.status, 200);
+    assert.match(license.headers.get("content-type") ?? "", /text\/plain/);
+    assert.match(await license.text(), /Aegean License 1\.1/);
 
     const privateFile = await fetch(`${url}package.json`);
     assert.equal(privateFile.status, 404);

@@ -203,6 +203,7 @@ async function main() {
     await connection.send("Page.enable");
     await connection.send("Runtime.enable");
     await connection.send("Log.enable");
+    let viewportEmulated = true;
     try {
       await connection.send("Emulation.setDeviceMetricsOverride", {
         width: 1440,
@@ -212,6 +213,7 @@ async function main() {
       });
     } catch {
       // Older browsers ignore the override; coordinates are scrolled into view anyway.
+      viewportEmulated = false;
     }
     try {
       await connection.send("Browser.setDownloadBehavior", {
@@ -246,6 +248,39 @@ async function main() {
     }
     if (!initial.machines || initial.hashStatus !== 'valid' || initial.duration !== 1) {
       throw new Error(`the AX surface is incomplete: ${JSON.stringify(initial)}`);
+    }
+
+    if (viewportEmulated) {
+      await connection.send("Emulation.setDeviceMetricsOverride", {
+        width: 1280,
+        height: 900,
+        deviceScaleFactor: 1,
+        mobile: false,
+      });
+      await wait(150);
+      let desktopGrid;
+      try {
+        desktopGrid = await connection.evaluate(`(() => {
+          const scroll = document.querySelector('.grid-scroll');
+          const table = document.querySelector('.grid-table');
+          return {
+            scrollWidth: scroll.scrollWidth,
+            clientWidth: scroll.clientWidth,
+            tableWidth: Math.round(table.getBoundingClientRect().width),
+          };
+        })()`);
+      } finally {
+        await connection.send("Emulation.setDeviceMetricsOverride", {
+          width: 1440,
+          height: 960,
+          deviceScaleFactor: 1,
+          mobile: false,
+        });
+        await wait(150);
+      }
+      if (desktopGrid.scrollWidth > desktopGrid.clientWidth + 1) {
+        throw new Error(`the 24-hour grid overflows at 1280px: ${JSON.stringify(desktopGrid)}`);
+      }
     }
 
     const malformedHash = await connection.evaluate(`(() => {
@@ -513,7 +548,7 @@ async function main() {
     }
 
     console.log(
-      "[OK] Meridian dogfood: default plan, malformed-link feedback, impossible-date refusal, non-finite slot normalisation, lowercase zone canonicalisation, add/remove people, drag selection across rows, cancelled drag, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links and Reset.",
+      "[OK] Meridian dogfood: default plan, 1280px desktop grid fit, malformed-link feedback, impossible-date refusal, non-finite slot normalisation, lowercase zone canonicalisation, add/remove people, drag selection across rows, cancelled drag, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links and Reset.",
     );
     return 0;
   } catch (error) {

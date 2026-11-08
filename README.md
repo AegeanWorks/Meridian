@@ -59,6 +59,7 @@ meridian/
 ├── .gitignore                <- transient state excluded
 ├── .aikit/                   <- this project's memory: record, ledger, decisions
 ├── docs/
+│   ├── history_audit.md      <- progressive window audit log
 │   ├── state_machines.md     <- verified inventory of implicit state machines
 │   └── state_machine_proposals.md <- fix proposals, verdicts and evidence
 ├── index.html                <- the static page (GitHub Pages entry)
@@ -95,9 +96,9 @@ meridian/
 
 ## 🧪 How It Is Tested
 
-`npm test` runs eight Node suites (59 tests): the time-zone math against known offsets and both DST transitions, zone search ranking, day-grid alignment across zones and day offsets, work-hour wrap-around, overlap windows and slot scoring, the URL-hash codec and its version boundary, slot/date/work-hour/duration normalization, zone canonicalization, the state-machine registry, byte-exact ICS output, the presentation helpers, the clipboard fallback, and the static server's path-traversal defenses.
+`npm test` runs eight Node suites (59 tests): the time-zone math against known offsets and both DST transitions, zone search ranking, day-grid alignment across zones and day offsets, work-hour wrap-around, overlap windows and slot scoring, the URL-hash codec and its version boundary, slot/date/work-hour/duration normalization, zone canonicalization, the state-machine registry, byte-exact ICS output, the presentation helpers, the clipboard fallback, and the static server's public whitelist, LICENSE route and path-traversal defenses.
 
-`npm run dogfood` starts the server, launches an installed Edge/Chrome headlessly and drives the real interface: malformed-link feedback, an impossible date, a non-finite slot, a lowercase zone, adding and removing people, dragging a slot across rows, a cancelled drag, keyboard nudging, Best slot, the share hash, the calendar download, the reference-zone change, the date stepper and a pasted share link.
+`npm run dogfood` starts the server, launches an installed Edge/Chrome headlessly and drives the real interface: a 1280px desktop grid fit, malformed-link feedback, an impossible date, a non-finite slot, a lowercase zone, adding and removing people, dragging a slot across rows, a cancelled drag, keyboard nudging, Best slot, the share hash, the calendar download, the reference-zone change, the date stepper and a pasted share link.
 
 <!-- aegean:brand-assets:start -->
 ## 🎨 Brand Assets

@@ -460,7 +460,7 @@ button:focus-visible {
   border-spacing: 0;
   table-layout: fixed;
   width: 100%;
-  min-width: 900px;
+  min-width: 840px;
 }
 
 .corner,

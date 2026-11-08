@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import { spawn } from "node:child_process";
 import { readFile, stat } from "node:fs/promises";
-import { extname, join, normalize, resolve, sep } from "node:path";
+import { basename, extname, join, normalize, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
@@ -20,7 +20,7 @@ const TYPES = Object.freeze({
   ".ico": "image/x-icon",
 });
 
-const PUBLIC_ENTRIES = Object.freeze(["index.html", "src", "assets"]);
+const PUBLIC_ENTRIES = Object.freeze(["LICENSE", "assets", "index.html", "src"]);
 
 export function browserCommand(platform, url) {
   if (platform === "win32") {
@@ -84,7 +84,10 @@ function handle(rootDir) {
         return;
       }
       const body = await readFile(filePath);
-      const type = TYPES[extname(filePath).toLowerCase()] ?? "application/octet-stream";
+      const type =
+        basename(filePath).toLowerCase() === "license"
+          ? "text/plain; charset=utf-8"
+          : TYPES[extname(filePath).toLowerCase()] ?? "application/octet-stream";
       response.writeHead(200, {
         "content-type": type,
         "content-length": body.length,

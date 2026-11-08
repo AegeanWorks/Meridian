@@ -1,50 +1,16 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "meridian-state-machines",
-    "last_phase": "phase 5",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1794166146.5688899,
+    "task_id": "meridian-history-audit",
+    "last_phase": "phase 4",
+    "active_phase": 4,
+    "status": "in_progress",
+    "updated_at": 1794166804.362071,
     "owner": "commandcode:goal",
     "started_by": "commandcode:goal",
-    "continuations": [],
-    "completed_at": 1794166151.0036583
+    "continuations": []
   },
   "checkpoints": [
-    {
-      "task_id": "build-static-timezone-planner",
-      "phase": "phase 2",
-      "phase_num": 2,
-      "description": "[1/5] Plan: meridian, a zero-dependency static time zone meeting planner for GitHub Pages. [1/5] Node scaffold (package.json, index.html, styles, serve+dogfood scripts, core skeleton, first tests). [2/5] Core engine: IANA zone model, 24h local-hour grid, work-hour categories, overlap and best-slot ranking, URL state codec, ICS export. [3/5] UI: participants editor, timeline grid, slot picker, share link, copy summary. [4/5] Accessibility, CSP and hygiene hardening, README final. [5/5] Full Phase 4 gates and ledger wrap-up.",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793375046.146687,
-      "timestamp_str": "2026-10-30 18:44:06",
-      "agent": "kilo:1",
-      "impact_assessment": {
-        "why": "The AegeanWorks portfolio has no time zone tool; a fully client-side meeting planner fills that gap and deploys on GitHub Pages with zero build step.",
-        "benefits": "A useful, offline, privacy-preserving scheduler for distributed teams; a new deployable static product for the org with a Node-tested core.",
-        "risks": "contract: none (new project); dependency: none (zero-dependency, Intl API in browser and Node 20+); concurrency: none (single-user client state); state: URL hash state must round-trip losslessly or shared links break.",
-        "mitigation": "Keep all timezone math in a pure src/core module covered by node --test; encode state as compact JSON with a schema version; test round-trip and ICS output byte-exactly."
-      }
-    },
-    {
-      "task_id": "build-static-timezone-planner",
-      "phase": "phase 3",
-      "phase_num": 3,
-      "description": "[2/5] Core engine landed: Intl-only wall-clock/offset math with DST gap and ambiguity rules, IANA catalog with curated fallback and ranked search, 24-hour day grid with per-person work hours (wrap-around shifts), overlap columns, best-window ranking, slot quality, URL-hash codec with defensive decoding, and RFC 5545 ICS export with escaping and octet folding. 5 Node suites, 47 tests, all passing in ~0.3s.",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793383785.9350996,
-      "timestamp_str": "2026-10-30 21:09:45",
-      "agent": "kilo:1",
-      "handoff": {
-        "state": "pure core modules are green",
-        "next": "build the UI (grid, panel, bootstrap, styles, index.html)",
-        "evidence": "node --test tests 47/47"
-      }
-    },
     {
       "task_id": "build-static-timezone-planner",
       "phase": "phase 3",
@@ -303,6 +269,40 @@
       "timestamp": 1794166151.0036597,
       "timestamp_str": "2026-11-08 22:29:11",
       "agent": "commandcode:goal"
+    },
+    {
+      "task_id": "meridian-history-audit",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/6] Window 1->3: audit the initial memory, planner and desktop-grid fix; fix the local LICENSE 404 and pin the 1280-1440 grid fit. [2/6] Window 1->6: audit the two-zone default, media docs and topics. [3/6] Window 1->9: audit UI-task evidence, live link and raster assets. [4/6] Window 1->12: audit the Reset control and screenshot. [5/6] Window 1->15: audit the live-catalog embed fix. [6/6] Windows 1->18 through 1->End: media keepers, state-machine commits and final doc corrections; full gates and push after each window.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794166463.1797323,
+      "timestamp_str": "2026-11-08 22:34:23",
+      "agent": "commandcode:goal",
+      "impact_assessment": {
+        "why": "The user asked for a progressive window audit of Meridian's history; each window may hide a gap that later commits did not close.",
+        "benefits": "Catches regressions, broken local assets, missing tests and doc drift; hardens the static contract; leaves a window-by-window audit record.",
+        "risks": "contract: local server whitelist and MIME type; dependency: none; concurrency: another goal owns the AIKit ledger, so work stays in the project ledger; state: project tree, ledger, UI history.",
+        "mitigation": "Read each commit delta, verify findings against the live tree and server, add failing-first tests, run npm test, dogfood and check --strict, commit and push per window."
+      },
+      "plan_digest": "5c71d2b663ac54b935b24667762022abcc551ba34109787e956b5009c4b4f6ca"
+    },
+    {
+      "task_id": "meridian-history-audit",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[1/6] Window 1->3 done: the local LICENSE route serves text/plain; the grid floor is 840px so all 24 columns fit at 1280px; tests cover the LICENSE route; dogfood covers the 1280px fit. npm test 59/59; npm run dogfood [OK]. checklists: passed.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794166804.362071,
+      "timestamp_str": "2026-11-08 22:40:04",
+      "agent": "commandcode:goal",
+      "handoff": {
+        "state": "window 1->3 fixed and verified",
+        "next": "commit/push, then window 1->6",
+        "evidence": "npm test 59/59, dogfood [OK], 1280x900 capture reviewed"
+      }
     }
   ]
 }
