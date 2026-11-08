@@ -233,6 +233,9 @@ async function main() {
         cells: document.querySelectorAll('button.cell').length,
         nowLine: Boolean(document.querySelector('.now-line')) && !document.querySelector('.now-line').hidden,
         heading: document.getElementById('date-heading').textContent,
+        machines: Boolean(app?.machines?.['plan-version']),
+        hashStatus: app?.hashStatus ?? null,
+        duration: app?.duration ?? null,
       };
     })()`);
     if (!initial.ready || initial.participants !== 2 || initial.rows !== 2 || initial.cells !== 48) {
@@ -240,6 +243,75 @@ async function main() {
     }
     if (!initial.nowLine || !initial.heading.trim()) {
       throw new Error(`the today marker or date heading is missing: ${JSON.stringify(initial)}`);
+    }
+    if (!initial.machines || initial.hashStatus !== 'valid' || initial.duration !== 1) {
+      throw new Error(`the AX surface is incomplete: ${JSON.stringify(initial)}`);
+    }
+
+    const malformedHash = await connection.evaluate(`(() => {
+      const before = globalThis.meridian.plan.date;
+      const good = location.hash;
+      history.replaceState(null, '', '#p=not-json');
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+      const result = {
+        before,
+        date: globalThis.meridian.plan.date,
+        message: document.getElementById('status').textContent,
+        tone: document.getElementById('status').dataset.tone ?? '',
+      };
+      history.replaceState(null, '', good);
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+      return result;
+    })()`);
+    if (
+      malformedHash.date !== malformedHash.before ||
+      !/could not be read/i.test(malformedHash.message) ||
+      malformedHash.tone !== 'error'
+    ) {
+      throw new Error(`a malformed share hash was not reported: ${JSON.stringify(malformedHash)}`);
+    }
+
+    const invalidDate = await connection.evaluate(`(() => {
+      const before = globalThis.meridian.plan.date;
+      const result = globalThis.meridian.setDate('2026-02-31');
+      return {
+        before,
+        result,
+        date: globalThis.meridian.plan.date,
+        input: document.getElementById('date-input').value,
+      };
+    })()`);
+    if (
+      invalidDate.result !== false ||
+      invalidDate.date !== invalidDate.before ||
+      invalidDate.input !== invalidDate.before
+    ) {
+      throw new Error(`an impossible date was accepted: ${JSON.stringify(invalidDate)}`);
+    }
+
+    const badSlot = await connection.evaluate(`(() => {
+      globalThis.meridian.setSlot({ start: Number.NaN, hours: 2 });
+      return {
+        slot: globalThis.meridian.slot,
+        summaryHidden: document.getElementById('summary').hidden,
+      };
+    })()`);
+    if (badSlot.slot !== null || !badSlot.summaryHidden) {
+      throw new Error(`a non-finite slot was not normalized: ${JSON.stringify(badSlot)}`);
+    }
+
+    const zoneForm = await connection.evaluate(`(() => {
+      const original = globalThis.meridian.plan.referenceZone;
+      const input = document.getElementById('reference-zone');
+      input.value = 'europe/istanbul';
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      const canonical = globalThis.meridian.plan.referenceZone;
+      input.value = original;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      return { original, canonical, restored: globalThis.meridian.plan.referenceZone };
+    })()`);
+    if (zoneForm.canonical !== 'Europe/Istanbul' || zoneForm.restored !== zoneForm.original) {
+      throw new Error(`a zone was not canonicalized: ${JSON.stringify(zoneForm)}`);
     }
 
     await addPerson(connection, "Sam", "America/New_York");
@@ -275,10 +347,15 @@ async function main() {
       title: document.getElementById('summary-title').textContent,
       lines: document.querySelectorAll('#summary-lines li').length,
       badge: document.getElementById('summary-badge').textContent,
+      duration: document.getElementById('duration').value,
+      durationState: globalThis.meridian.duration,
       icsEnabled: !document.getElementById('download-ics').disabled,
     }))()`);
     if (!dragged.slot || dragged.slot.start !== 10 || dragged.slot.hours !== 3) {
       throw new Error(`dragging did not select a three-hour slot: ${JSON.stringify(dragged.slot)}`);
+    }
+    if (dragged.duration !== '3' || dragged.durationState !== 3) {
+      throw new Error(`the length selector did not follow the slot: ${JSON.stringify(dragged)}`);
     }
     if (dragged.selected !== 3 * 4) {
       throw new Error(`the selection was not painted on every row: ${dragged.selected}`);
@@ -332,6 +409,24 @@ async function main() {
       throw new Error("the downloaded calendar is missing its event");
     }
     if (!/SUMMARY:.+/u.test(calendar)) throw new Error("the downloaded calendar has no summary");
+
+    const cancelCenters = await cellCenters(connection, firstId, 14, 18);
+    const cancelledDrag = await connection.evaluate(`(() => {
+      const first = document.querySelector('button.cell[data-id="${firstId}"][data-col="14"]');
+      first.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, button: 0, clientX: ${Math.round(cancelCenters.from.x)}, clientY: ${Math.round(cancelCenters.from.y)} }));
+      const afterDown = globalThis.meridian.slot;
+      window.dispatchEvent(new PointerEvent('pointercancel', { bubbles: true }));
+      const target = document.querySelector('button.cell[data-id="${firstId}"][data-col="18"]');
+      target.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, clientX: ${Math.round(cancelCenters.to.x)}, clientY: ${Math.round(cancelCenters.to.y)} }));
+      return { afterDown, afterMove: globalThis.meridian.slot };
+    })()`);
+    if (
+      !cancelledDrag.afterDown ||
+      cancelledDrag.afterMove.start !== cancelledDrag.afterDown.start ||
+      cancelledDrag.afterMove.hours !== cancelledDrag.afterDown.hours
+    ) {
+      throw new Error(`a cancelled drag kept resizing: ${JSON.stringify(cancelledDrag)}`);
+    }
 
     await connection.evaluate(`(() => {
       const row = document.querySelectorAll('.participant')[2];
@@ -418,7 +513,7 @@ async function main() {
     }
 
     console.log(
-      "[OK] Meridian dogfood: default plan, add/remove people, drag selection across rows, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links and Reset.",
+      "[OK] Meridian dogfood: default plan, malformed-link feedback, impossible-date refusal, non-finite slot normalisation, lowercase zone canonicalisation, add/remove people, drag selection across rows, cancelled drag, keyboard nudge, best slot, share hash, calendar download, reference zone, date stepper, pasted links and Reset.",
     );
     return 0;
   } catch (error) {

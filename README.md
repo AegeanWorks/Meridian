@@ -41,6 +41,7 @@ Meridian is a static site. There is no build step, no server, no account and no 
 - **Work hours decide quality.** Each person has a work-day start and end; cells inside it are highlighted, and columns where everyone is in work hours are banded in the header.
 - **Pick a slot.** Click or drag across the timeline, or press **Best slot**. The summary card lists the chosen hour in every participant's local time and says whether everyone is inside work hours, merely awake, or asleep.
 - **Share by link.** The whole plan (people, zones, work hours, date) is encoded in the URL hash, so a copied link rebuilds it exactly. No account, no storage.
+- **Versioned, forgiving links.** The plan payload carries a format version; an unreadable link shows a clear message instead of silently discarding what the sender shared.
 - **Take it to a calendar.** *Add to calendar* downloads an RFC 5545 `.ics` file with the event in UTC, escaped, folded and importable by any calendar app.
 - **Zero dependencies.** No frameworks, no fonts, no CDN, no analytics. A strict Content-Security-Policy allows only the page's own files.
 
@@ -57,6 +58,9 @@ Meridian is a static site. There is no build step, no server, no account and no 
 meridian/
 ├── .gitignore                <- transient state excluded
 ├── .aikit/                   <- this project's memory: record, ledger, decisions
+├── docs/
+│   ├── state_machines.md     <- verified inventory of implicit state machines
+│   └── state_machine_proposals.md <- fix proposals, verdicts and evidence
 ├── index.html                <- the static page (GitHub Pages entry)
 ├── package.json              <- npm start / test / dogfood scripts
 ├── play.cmd                  <- one-click launch on Windows
@@ -69,6 +73,7 @@ meridian/
 │   │   ├── zones.js          <- zone catalog, labels and ranked search
 │   │   ├── schedule.js       <- day grid, overlap columns, slot scoring
 │   │   ├── state.js          <- plan normalization and URL-hash codec
+│   │   ├── machines.js       <- explicit state-machine registry (read-only)
 │   │   └── ics.js            <- RFC 5545 calendar export
 │   └── ui/
 │       ├── main.js           <- bootstrap, state and control wiring
@@ -90,9 +95,9 @@ meridian/
 
 ## 🧪 How It Is Tested
 
-`npm test` runs five Node suites (47 tests): the time-zone math against known offsets and both DST transitions, zone search ranking, day-grid alignment across zones and day offsets, work-hour wrap-around, overlap windows and slot scoring, the URL-hash codec against malformed input, byte-exact ICS output, the presentation helpers, the clipboard fallback, and the static server's path-traversal defenses.
+`npm test` runs eight Node suites (59 tests): the time-zone math against known offsets and both DST transitions, zone search ranking, day-grid alignment across zones and day offsets, work-hour wrap-around, overlap windows and slot scoring, the URL-hash codec and its version boundary, slot/date/work-hour/duration normalization, zone canonicalization, the state-machine registry, byte-exact ICS output, the presentation helpers, the clipboard fallback, and the static server's path-traversal defenses.
 
-`npm run dogfood` starts the server, launches an installed Edge/Chrome headlessly and drives the real interface: adding and removing people, dragging a slot across rows, keyboard nudging, Best slot, the share hash, the calendar download, the reference-zone change, the date stepper and a pasted share link.
+`npm run dogfood` starts the server, launches an installed Edge/Chrome headlessly and drives the real interface: malformed-link feedback, an impossible date, a non-finite slot, a lowercase zone, adding and removing people, dragging a slot across rows, a cancelled drag, keyboard nudging, Best slot, the share hash, the calendar download, the reference-zone change, the date stepper and a pasted share link.
 
 <!-- aegean:brand-assets:start -->
 ## 🎨 Brand Assets
