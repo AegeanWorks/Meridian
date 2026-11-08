@@ -14,7 +14,7 @@ proves the fixed behaviour.
 | 1->6 | `cc67033`, `1d9af69`, `629cc5a` | **done** | The two-zone default always took the first non-reference guest, so Tokyo, Sydney and Kolkata opened with **zero** shared work windows; the README tree omitted `assets/screenshots/` | Rank guest zones by shared work, then shared awake, and add Tokyo/Sydney tests; list the screenshot directory; media audit stays clean |
 | 1->9 | `ba44c75`, `07d1f4d`, `2a2ac29` | **done** | The live site returned 200 and every PNG matched the recorded dimensions, but nothing guarded `.aikit/media.json` or the README asset references; either could drift silently | Add `tests/media.test.js`: every recorded asset exists, is a PNG and matches its recorded width/height; every README `assets/` reference exists |
 | 1->12 | `45b2553`, `d8bf86e`, `4c837f1` | **done** | Reset restored the plan and cleared the slot, but its preserved meeting length and confirmation toast were untested; the README did not say the length is kept | Capture the length before Reset, assert it is unchanged and the toast appears; document the kept length; the screenshot is already media-guarded |
-| 1->15 | next 3 commits | pending | - | - |
+| 1->15 | `2520db5`, `e7c0ad6`, `615e040` | **done** | `index.html` has no third-party URL and every local reference exists, but nothing enforced that embeddable-build contract | Add `tests/contract.test.js`: every `src`/`href` is local or a fragment, and every local path resolves; version 0.1.1 and the UI/ledger records checked |
 | 1->18 | next 3 commits | pending | - | - |
 | 1->21 | next 3 commits | pending | - | - |
 | 1->End | remaining commits | pending | - | - |
@@ -136,3 +136,31 @@ Evidence:
 
 - `npm test` -> 62/62; `npm run dogfood` -> `[OK]` including the preserved
   length and Reset toast; `python aikit.py media audit meridian` -> `clean`.
+
+## Window 1->15
+
+Commits: the Reset-control UI evidence (`2520db5`), its ledger completion
+(`e7c0ad6`) and the embeddable-build fix (`615e040`).
+
+Findings:
+
+- `index.html` contains no `http://` or `https://` reference. The footer credit
+  is plain text, the stylesheet, icon, module and license links are relative,
+  and every local path exists.
+- `package.json` is 0.1.1 and the UI history holds the Reset task.
+- No functional bug reproduced. The gap was enforcement: a future footer link
+  or asset path could reintroduce a third-party URL or a dead local reference
+  and break the live-catalog contract without a gate.
+- The local server's LICENSE whitelist from window 1->3 also keeps the relative
+  footer link working under `npm start`.
+
+Fix:
+
+- `tests/contract.test.js` scans every `src`/`href`, refuses any third-party
+  URL, and checks that every local target exists.
+- The README now reports ten suites and 63 tests.
+
+Evidence:
+
+- `grep` for `https?://` in `index.html` -> no matches.
+- `npm test` -> 63/63 across 10 suites; `npm run dogfood` -> `[OK]`.

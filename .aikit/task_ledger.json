@@ -5,28 +5,12 @@
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794167456.0360134,
+    "updated_at": 1794167561.6032777,
     "owner": "commandcode:goal",
     "started_by": "commandcode:goal",
     "continuations": []
   },
   "checkpoints": [
-    {
-      "task_id": "build-static-timezone-planner",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[5/5] Delivery pass: hand-authored teal/navy logo and social preview replacing the random scaffold palette; grid now fits 24 hours at 1280 px; default plan opens with the viewer plus one guest zone so the tool demonstrates itself; screenshot captured and commit-stamped. checklists: passed. Gates 4/4, tests 47/47, dogfood [OK].",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793385140.468534,
-      "timestamp_str": "2026-10-30 21:32:20",
-      "agent": "kilo:1",
-      "handoff": {
-        "state": "4 modified + 1 untracked (screenshot) after two commits",
-        "next": "review the three pending media assets, apply them to the dossier, then publish when authorized",
-        "evidence": "aikit.py check meridian 4/4"
-      }
-    },
     {
       "task_id": "build-static-timezone-planner",
       "phase": "phase 4",
@@ -303,6 +287,22 @@
         "state": "window 1->12 verified",
         "next": "commit/push, then window 1->15",
         "evidence": "npm test 62/62, npm run dogfood [OK]"
+      }
+    },
+    {
+      "task_id": "meridian-history-audit",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[5/6] Window 1->15 done: index.html has no third-party URL and every local src/href resolves; tests/contract.test.js enforces the self-contained page; version 0.1.1 and the UI/ledger records checked; tests 63/63; dogfood [OK]. checklists: passed.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794167561.6032777,
+      "timestamp_str": "2026-11-08 22:52:41",
+      "agent": "commandcode:goal",
+      "handoff": {
+        "state": "window 1->15 verified",
+        "next": "commit/push, then window 1->18",
+        "evidence": "npm test 63/63, npm run dogfood [OK]"
       }
     }
   ]
