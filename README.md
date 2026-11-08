@@ -87,7 +87,7 @@ meridian/
 │   ├── serve.mjs             <- dependency-free static server for local use
 │   └── dogfood.mjs           <- headless browser dogfood pass
 ├── tests/                    <- node --test unit and server suites
-├── assets/                   <- logo and social preview
+├── assets/                   <- logo, social preview and commit-stamped screenshots
 ├── LICENSE                   <- Aegean License 1.1 (AL-1.1): free personal use
 ├── LICENSES/                 <- REUSE license texts
 ├── COMMERCIAL.md             <- commercial licensing terms
@@ -96,7 +96,7 @@ meridian/
 
 ## 🧪 How It Is Tested
 
-`npm test` runs eight Node suites (59 tests): the time-zone math against known offsets and both DST transitions, zone search ranking, day-grid alignment across zones and day offsets, work-hour wrap-around, overlap windows and slot scoring, the URL-hash codec and its version boundary, slot/date/work-hour/duration normalization, zone canonicalization, the state-machine registry, byte-exact ICS output, the presentation helpers, the clipboard fallback, and the static server's public whitelist, LICENSE route and path-traversal defenses.
+`npm test` runs eight Node suites (60 tests): the time-zone math against known offsets and both DST transitions, zone search ranking, day-grid alignment across zones and day offsets, work-hour wrap-around, overlap windows and slot scoring, the two-zone default guest selection, the URL-hash codec and its version boundary, slot/date/work-hour/duration normalization, zone canonicalization, the state-machine registry, byte-exact ICS output, the presentation helpers, the clipboard fallback, and the static server's public whitelist, LICENSE route and path-traversal defenses.
 
 `npm run dogfood` starts the server, launches an installed Edge/Chrome headlessly and drives the real interface: a 1280px desktop grid fit, malformed-link feedback, an impossible date, a non-finite slot, a lowercase zone, adding and removing people, dragging a slot across rows, a cancelled drag, keyboard nudging, Best slot, the share hash, the calendar download, the reference-zone change, the date stepper and a pasted share link.
 

@@ -235,6 +235,9 @@ async function main() {
         cells: document.querySelectorAll('button.cell').length,
         nowLine: Boolean(document.querySelector('.now-line')) && !document.querySelector('.now-line').hidden,
         heading: document.getElementById('date-heading').textContent,
+        guest: app?.plan?.participants?.[1]?.label ?? null,
+        guestZone: app?.plan?.participants?.[1]?.zone ?? null,
+        referenceZone: app?.plan?.referenceZone ?? null,
         machines: Boolean(app?.machines?.['plan-version']),
         hashStatus: app?.hashStatus ?? null,
         duration: app?.duration ?? null,
@@ -248,6 +251,9 @@ async function main() {
     }
     if (!initial.machines || initial.hashStatus !== 'valid' || initial.duration !== 1) {
       throw new Error(`the AX surface is incomplete: ${JSON.stringify(initial)}`);
+    }
+    if (!initial.guest || initial.guestZone === initial.referenceZone) {
+      throw new Error(`the default plan needs a different guest zone: ${JSON.stringify(initial)}`);
     }
 
     if (viewportEmulated) {
@@ -362,7 +368,7 @@ async function main() {
     if (added.rows !== 4 || added.cells !== 96) {
       throw new Error(`adding people did not grow the grid: ${JSON.stringify(added)}`);
     }
-    if (added.participants.join(",") !== "You,New York,Sam,Mei") {
+    if (added.participants.join(",") !== `You,${initial.guest},Sam,Mei`) {
       throw new Error(`participant order is wrong: ${JSON.stringify(added.participants)}`);
     }
     if (!added.hash.includes("#p=")) throw new Error("the plan was not written to the URL hash");

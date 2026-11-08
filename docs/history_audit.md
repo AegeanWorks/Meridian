@@ -11,7 +11,7 @@ proves the fixed behaviour.
 | Window | New commits | Status | Findings | Resolution |
 |---|---|---|---|---|
 | 1->3 | `0f7aa00`, `62293a1`, `99b468f` | **done** | The footer's `./LICENSE` link 404'd under `npm start`; the 24-hour grid overflowed at 1280px despite the "1280-1440" claim (`scrollWidth 900`, column `859`) | Serve `LICENSE` as `text/plain`; lower the grid floor from 900px to 840px; add server and 1280px dogfood assertions |
-| 1->6 | next 3 commits | pending | - | - |
+| 1->6 | `cc67033`, `1d9af69`, `629cc5a` | **done** | The two-zone default always took the first non-reference guest, so Tokyo, Sydney and Kolkata opened with **zero** shared work windows; the README tree omitted `assets/screenshots/` | Rank guest zones by shared work, then shared awake, and add Tokyo/Sydney tests; list the screenshot directory; media audit stays clean |
 | 1->9 | next 3 commits | pending | - | - |
 | 1->12 | next 3 commits | pending | - | - |
 | 1->15 | next 3 commits | pending | - | - |
@@ -52,3 +52,35 @@ Evidence:
 - After: `/LICENSE` -> 200 text/plain; `npm test` -> 59/59; `npm run dogfood`
   -> `[OK]` including `1280px desktop grid fit`; a 1280x900 headless capture
   showed all 24 columns and no horizontal scrollbar.
+
+## Window 1->6
+
+Commits: the two-zone example and media refresh (`cc67033`), the README social
+preview and dossier screenshot (`1d9af69`) and the recorded topics (`629cc5a`).
+
+Findings that still reproduced on the current tree:
+
+1. **The two-zone example did not always demonstrate overlap.** `defaultPlan`
+   took the first guest zone that was not the reference zone. For a viewer in
+   Tokyo, Sydney or Kolkata that guest was New York, and the day plan had zero
+   shared work windows (only two awake windows), contradicting the commit's
+   "demonstrates overlap immediately" intent.
+2. **The README tree omitted `assets/screenshots/`.** Three tracked, approved
+   captures lived there but the tree listed only "logo and social preview".
+
+Fixes:
+
+- `guestZoneFor` builds a candidate day plan and ranks zones by a shared work
+  window first, then a shared awake window, then list order. The first work
+  match stops the scan.
+- `tests/state.test.js` asserts Tokyo -> Sydney and Sydney -> Tokyo, each with
+  a non-empty work window.
+- The README tree now names the screenshot directory and the test count is 60.
+
+Evidence:
+
+- Before: `defaultPlan(..., "Asia/Tokyo")` -> `New York`, `work 0`, `awake 2`;
+  the same for Sydney and Kolkata.
+- After: Tokyo -> Sydney, Sydney -> Tokyo, both with `work 1`; `npm test` ->
+  60/60; `npm run dogfood` -> `[OK]`; `aikit.py media audit meridian` ->
+  `clean` (0 pending reviews, 4 dossier screenshots).

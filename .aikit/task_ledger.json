@@ -5,28 +5,12 @@
     "last_phase": "phase 4",
     "active_phase": 4,
     "status": "in_progress",
-    "updated_at": 1794166804.362071,
+    "updated_at": 1794167161.4662015,
     "owner": "commandcode:goal",
     "started_by": "commandcode:goal",
     "continuations": []
   },
   "checkpoints": [
-    {
-      "task_id": "build-static-timezone-planner",
-      "phase": "phase 3",
-      "phase_num": 3,
-      "description": "[3/5] Static UI landed: dark Aegean stylesheet, index.html with strict CSP, timeline grid with category colours, overlap bands, now marker, pointer drag and arrow-key selection; participant panel with live clocks, work-hour selects and zone validation; bootstrap wiring plan/slot state and the hash; clipboard helper with legacy fallback. Recorded has_ui=yes (kind web) and adopted the UI contract via fix (.aikit/ui.json).",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793383786.411961,
-      "timestamp_str": "2026-10-30 21:09:46",
-      "agent": "kilo:1",
-      "handoff": {
-        "state": "gates not yet re-run after UI",
-        "next": "browser dogfood and README",
-        "evidence": "npm test 47/47"
-      }
-    },
     {
       "task_id": "build-static-timezone-planner",
       "phase": "phase 3",
@@ -302,6 +286,22 @@
         "state": "window 1->3 fixed and verified",
         "next": "commit/push, then window 1->6",
         "evidence": "npm test 59/59, dogfood [OK], 1280x900 capture reviewed"
+      }
+    },
+    {
+      "task_id": "meridian-history-audit",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/6] Window 1->6 done: the default guest now ranks a shared work window first, then shared awake; Tokyo->Sydney and Sydney->Tokyo both show a work window; the README tree lists assets/screenshots; tests 60/60; dogfood [OK]; media audit clean. checklists: passed.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794167161.4662015,
+      "timestamp_str": "2026-11-08 22:46:01",
+      "agent": "commandcode:goal",
+      "handoff": {
+        "state": "window 1->6 fixed and verified",
+        "next": "commit/push, then window 1->9",
+        "evidence": "npm test 60/60, npm run dogfood [OK], media audit clean"
       }
     }
   ]

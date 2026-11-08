@@ -4,7 +4,7 @@
  */
 
 import { currentZone, localDateISO, parseDateISO } from "./time.js";
-import { DEFAULT_WORK } from "./schedule.js";
+import { DEFAULT_WORK, buildDayPlan } from "./schedule.js";
 import { canonicalZone, zoneLabel } from "./zones.js";
 
 export const STATE_VERSION = 1;
@@ -141,16 +141,36 @@ export const DEFAULT_GUEST_ZONES = Object.freeze([
   "Asia/Singapore",
 ]);
 
+function guestZoneFor(referenceZone, date) {
+  let guestZone = null;
+  let bestRank = -1;
+  for (const candidate of DEFAULT_GUEST_ZONES) {
+    if (candidate === referenceZone) continue;
+    const day = buildDayPlan({
+      date,
+      referenceZone,
+      participants: [
+        { id: "p1", label: "You", zone: referenceZone },
+        { id: "p2", label: zoneLabel(candidate), zone: candidate },
+      ],
+    });
+    const rank = day.windows.work.length ? 2 : day.windows.awake.length ? 1 : 0;
+    if (rank > bestRank) {
+      bestRank = rank;
+      guestZone = candidate;
+    }
+    if (rank === 2) break;
+  }
+  return guestZone;
+}
+
 export function defaultPlan(now = Date.now(), zone = currentZone()) {
   const referenceZone = canonicalZone(zone) ?? "UTC";
-  const guestZone = DEFAULT_GUEST_ZONES.find((candidate) => candidate !== referenceZone);
+  const date = localDateISO(now, referenceZone);
+  const guestZone = guestZoneFor(referenceZone, date);
   const participants = [{ label: "You", zone: referenceZone }];
   if (guestZone) participants.push({ label: zoneLabel(guestZone), zone: guestZone });
-  return normalizePlan({
-    date: localDateISO(now, referenceZone),
-    referenceZone,
-    participants,
-  });
+  return normalizePlan({ date, referenceZone, participants });
 }
 
 export function planEquals(a, b) {

@@ -15,6 +15,7 @@ import {
   readShareHash,
   shareUrl,
 } from "../src/core/state.js";
+import { buildDayPlan } from "../src/core/schedule.js";
 
 const valid = () => ({
   date: "2026-06-15",
@@ -39,6 +40,17 @@ test("the default plan is the viewer's zone plus one guest in another region", (
   });
   assert.notEqual(plan.participants[1].zone, "Europe/Istanbul");
   assert.equal(plan.participants[1].label, "New York");
+});
+
+test("the default guest prefers a shared work window", () => {
+  for (const [zone, guest] of [
+    ["Asia/Tokyo", "Australia/Sydney"],
+    ["Australia/Sydney", "Asia/Tokyo"],
+  ]) {
+    const plan = defaultPlan(at("2026-06-15T12:00:00Z"), zone);
+    assert.equal(plan.participants[1].zone, guest);
+    assert.ok(buildDayPlan(plan).windows.work.length > 0, `${zone} needs a shared work window`);
+  }
 });
 
 test("the default plan falls back to UTC for an unknown zone", () => {
