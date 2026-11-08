@@ -6,4 +6,9 @@ if ! command -v node >/dev/null 2>&1; then
   echo "Install it from https://nodejs.org/ and run ./play.sh again."
   exit 1
 fi
+if ! node -e 'process.exit(Number(process.versions.node.split(".")[0]) >= 20 ? 0 : 1)' >/dev/null 2>&1; then
+  echo "Meridian needs Node.js 20 or newer. Found: $(node --version 2>/dev/null || echo none)"
+  echo "Install it from https://nodejs.org/ and run ./play.sh again."
+  exit 1
+fi
 exec node scripts/serve.mjs --open

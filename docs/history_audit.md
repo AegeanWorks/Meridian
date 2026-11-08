@@ -269,3 +269,29 @@ Evidence:
   `python aikit.py check meridian --strict` -> 4/4 gates.
 - `git log --reverse` covers commits 1..22; every window through `1->End` is
   marked **done** in the table above.
+
+## Second pass: runtime contract
+
+Findings:
+
+- `play.cmd` and `play.sh` printed "Meridian needs Node.js 20 or newer" but
+  only checked that `node` existed. An older Node reached the server and failed
+  with a stack trace.
+- The README stated Node 20+ without separating the Node 22+ headless dogfood,
+  which needs a global WebSocket client.
+- The tests tree label said "unit and server suites" although media and
+  contract suites exist.
+
+Fix:
+
+- Both launch scripts probe the major version before starting the server and
+  print the found version on failure.
+- The README prerequisites now split Node 20+ (server/tests) from Node 22+
+  (dogfood); the tree names the media and contract suites.
+
+Evidence:
+
+- `node -e "…major >= 20…"` -> exit 0; `sh -n play.sh` -> `[OK] play.sh syntax`;
+  a copy of `play.cmd` with only the launch line replaced -> `[OK] node launch
+  path reached`.
+- `npm test` -> 63/63; `npm run dogfood` -> `[OK]`; `check --strict` -> 4/4.

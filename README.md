@@ -14,7 +14,7 @@ Meridian is a static site. There is no build step, no server, no account and no 
 
 ## ⚡ 30-Second Cold-Start Quick Reference
 
-- **Runtime Prerequisites**: Node.js 20+ (only to run the local static server and the test suite); any modern browser (Chromium, Firefox or Safari). No `npm install`, no third-party packages, no network access.
+- **Runtime Prerequisites**: Node.js 20+ for the local static server and the test suite; Node.js 22+ for the headless WebSocket dogfood (it skips cleanly on older Node). Any modern browser (Chromium, Firefox or Safari). No `npm install`, no third-party packages, no network access.
 - **Run it locally**:
   ```bash
   npm start          # serves http://127.0.0.1:4179/ and opens it
@@ -86,7 +86,7 @@ meridian/
 ├── scripts/
 │   ├── serve.mjs             <- dependency-free static server for local use
 │   └── dogfood.mjs           <- headless browser dogfood pass
-├── tests/                    <- node --test unit and server suites
+├── tests/                    <- node --test unit, media, contract and server suites
 ├── assets/                   <- logo, social preview and commit-stamped screenshots
 ├── LICENSE                   <- Aegean License 1.1 (AL-1.1): free personal use
 ├── LICENSES/                 <- REUSE license texts

@@ -1,38 +1,16 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "meridian-history-audit",
+    "task_id": "meridian-runtime-contract",
     "last_phase": "phase 4",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1794169168.2249792,
+    "active_phase": 4,
+    "status": "in_progress",
+    "updated_at": 1794169666.8485386,
     "owner": "commandcode:goal",
     "started_by": "commandcode:goal",
-    "continuations": [],
-    "completed_at": 1794169205.829008
+    "continuations": []
   },
   "checkpoints": [
-    {
-      "task_id": "planner-polish",
-      "phase": "phase 4",
-      "phase_num": 4,
-      "description": "[1/1] Screenshot refreshed at d8bf86e and approved; media audit clean. checklists: passed. Gates 4/4, tests 47/47, dogfood [OK] x3.",
-      "files_affected": [],
-      "status": "in_progress",
-      "timestamp": 1793390343.4064455,
-      "timestamp_str": "2026-10-30 22:59:03",
-      "agent": "kilo:1"
-    },
-    {
-      "task_id": "planner-polish",
-      "phase": "completed",
-      "phase_num": 5,
-      "description": "Task 'planner-polish' completed successfully.",
-      "status": "completed",
-      "timestamp": 1793391339.8348584,
-      "timestamp_str": "2026-10-30 23:15:39",
-      "agent": "kilo:1"
-    },
     {
       "task_id": "planner-live-embed",
       "phase": "phase 3",
@@ -307,6 +285,40 @@
       "timestamp": 1794169205.8290105,
       "timestamp_str": "2026-11-08 23:20:05",
       "agent": "commandcode:goal"
+    },
+    {
+      "task_id": "meridian-runtime-contract",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/2] Second pass: enforce Node 20+ in play.cmd/play.sh before starting the server, state Node 22+ for the headless dogfood, and correct the tests tree label. [2/2] Run unit, dogfood and strict gates; commit and push.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794169585.4513855,
+      "timestamp_str": "2026-11-08 23:26:25",
+      "agent": "commandcode:goal",
+      "impact_assessment": {
+        "why": "The launch scripts printed a Node 20+ requirement but only checked that node existed, so an older Node reached the server and failed with a stack trace; the README also did not state the dogfood's Node 22+ WebSocket requirement.",
+        "benefits": "Zero-friction onboarding now fails with a clear version message instead of a stack trace, and the documented runtime split matches the scripts.",
+        "risks": "contract: runtime prerequisite text and launch scripts; dependency: none; concurrency: none; state: play.cmd, play.sh, README, audit log.",
+        "mitigation": "Keep the existing missing-node path, add one major-version probe, verify the probe on the current Node, and rerun the full gates."
+      },
+      "plan_digest": "9e9f0acb88703976ef011b42fc0b171395d8b57ece5d6aeb0357c17fceaf4269"
+    },
+    {
+      "task_id": "meridian-runtime-contract",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[2/2] Runtime contract done: play.cmd and play.sh enforce Node 20+ and print the found version; the README states Node 22+ for the dogfood and names the media/contract suites; the Node probe exits 0; sh -n play.sh passes; the play.cmd launch path was exercised; tests 63/63; dogfood [OK]. checklists: passed.",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1794169666.8485386,
+      "timestamp_str": "2026-11-08 23:27:46",
+      "agent": "commandcode:goal",
+      "handoff": {
+        "state": "runtime-contract pass complete",
+        "next": "commit/push and complete the task",
+        "evidence": "npm test 63/63, dogfood [OK], node probe exit 0, sh -n OK"
+      }
     }
   ]
 }
