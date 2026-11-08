@@ -8,6 +8,8 @@
 
 A zero-dependency time zone meeting planner that runs entirely in the browser: add people and cities, compare every local hour side by side, find the overlap that works for everyone, then share it as a link or a calendar file.
 
+> **Archived**: User-requested retirement of the Meridian planner after the state-machine and history audit delivery. (archived 2026-11-08). This project is read-only; its GitHub repository is archived.
+
 **Live:** <https://aegeanworks.github.io/Meridian/>
 
 Meridian is a static site. There is no build step, no server, no account and no upload: the page reads the browser's own IANA time zone database through `Intl`, keeps the whole plan in the URL hash, and works offline once loaded.
